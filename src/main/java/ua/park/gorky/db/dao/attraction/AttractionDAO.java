@@ -3,6 +3,7 @@ package ua.park.gorky.db.dao.attraction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ua.park.gorky.core.entity.Attraction;
+import ua.park.gorky.core.entity.exception.DBLayerException;
 import ua.park.gorky.db.connection.MySQLConnection;
 import ua.park.gorky.db.constants.DbTables;
 
@@ -31,7 +32,7 @@ public class AttractionDAO implements IAttractionDAO {
             + " WHERE idAttraction = ?";
 
     @Override
-    public boolean addAttraction(Attraction attraction) {
+    public void addAttraction(Attraction attraction) {
         Connection con = MySQLConnection.getWebInstance();
         try (PreparedStatement pstm = con.prepareStatement(ADD_ATTRACTION)) {
             int k = 1;
@@ -42,28 +43,26 @@ public class AttractionDAO implements IAttractionDAO {
             pstm.setInt(k++, attraction.getAdultPrice());
             pstm.setInt(k++, attraction.getChildPrice());
             pstm.executeUpdate();
-            return true;
-        } catch (SQLException e) {
+        } catch (SQLException ex) {
             rollback(con);
+            throw new DBLayerException("Failed to add attraction" + attraction, ex);
         } finally {
             commit(con);
         }
-        return false;
     }
 
     @Override
-    public boolean deleteAttraction(Attraction attraction) {
+    public void deleteAttraction(Attraction attraction) {
         Connection con = MySQLConnection.getWebInstance();
         try (PreparedStatement pstm = con.prepareStatement(DELETE_ATTRACTION)) {
             pstm.setInt(1, attraction.getId());
             pstm.executeUpdate();
-            return true;
-        } catch (SQLException e) {
+        } catch (SQLException ex) {
             rollback(con);
+            throw new DBLayerException("Failed to delete attraction" + attraction, ex);
         } finally {
             commit(con);
         }
-        return false;
     }
 
     @Override
@@ -76,12 +75,12 @@ public class AttractionDAO implements IAttractionDAO {
                 attractions.add(extractAtraction(rs));
             }
             return attractions;
-        } catch (SQLException e) {
+        } catch (SQLException ex) {
             rollback(con);
+            throw new DBLayerException("Failed to get all attractions", ex);
         } finally {
             commit(con);
         }
-        return attractions;
     }
 
     @Override
@@ -92,12 +91,12 @@ public class AttractionDAO implements IAttractionDAO {
             ResultSet rs = pstm.executeQuery();
             rs.relative(1);
             return extractAtraction(rs);
-        } catch (SQLException e) {
+        } catch (SQLException ex) {
             rollback(con);
+            throw new DBLayerException("Failed to get attraction by id=" + id, ex);
         } finally {
             commit(con);
         }
-        return null;
     }
 
     private void rollback(Connection con) {

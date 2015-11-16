@@ -8,9 +8,10 @@ import java.util.List;
  * @author Vladyslav
  */
 public interface IAttractionDAO {
-    boolean addAttraction(Attraction attraction);
 
-    boolean deleteAttraction(Attraction attraction);
+    void addAttraction(Attraction attraction);
+
+    void deleteAttraction(Attraction attraction);
 
     List<Attraction> getAttractions();
 
