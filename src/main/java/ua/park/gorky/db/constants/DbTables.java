@@ -5,8 +5,8 @@ public class DbTables {
 
 
     public static class User {
-        public static final String ID = "idUser";
-        public static final String ROLE = "idRole";
+        public static final String ID = "id_user";
+        public static final String ROLE = "id_role";
         public static final String LOGIN = "login";
         public static final String PASS = "password";
         public static final String NAME = "first_name";
@@ -21,8 +21,8 @@ public class DbTables {
 
     //NEWS
     public static class News {
-        public static final String ID = "idNews";
-        public static final String USER_ID = "idUser";
+        public static final String ID = "id_news";
+        public static final String USER_ID = "id_user";
         public static final String TITLE = "title";
         public static final String BODY = "body";
         public static final String PICTURE = "news_picture";
@@ -33,12 +33,12 @@ public class DbTables {
     public static final String NEWS_USER_COUNT = "count";
 
     public static class Role {
-        public static final String ID = "idRole";
+        public static final String ID = "id_role";
         public static final String NAME = "name";
     }
 
     public static class Attraction {
-        public static final String ID = "idAttraction";
+        public static final String ID = "id_attraction";
         public static final String TITLE = "title";
         public static final String DESC = "description";
         public static final String HEIGHT = "height";
@@ -48,9 +48,9 @@ public class DbTables {
     }
 
     public static class Comment {
-        public static final String ID = "idComment";
-        public static final String ID_USER = "idUser";
-        public static final String ID_NEWS = "idNews";
+        public static final String ID = "id_comment";
+        public static final String ID_USER = "id_user";
+        public static final String ID_NEWS = "id_news";
         public static final String BODY = "body";
         public static final String WROTE_DATE = "wrote_date";
     }

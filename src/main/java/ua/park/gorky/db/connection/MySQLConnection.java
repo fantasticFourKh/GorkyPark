@@ -16,12 +16,6 @@ public class MySQLConnection {
 		}
 	}
 
-	/**
-	 * Getting a connection with DB letmefly.
-	 * 
-	 * @return - connection
-	 */
-	
 	public static Connection getWebInstance() {
 		Connection con = null;
 		try {
