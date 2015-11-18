@@ -3,7 +3,7 @@ package ua.park.gorky.web;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ua.park.gorky.web.command.Command;
-import ua.park.gorky.web.command.CommandContainer;
+import ua.park.gorky.web.command.container.CommandContainer;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

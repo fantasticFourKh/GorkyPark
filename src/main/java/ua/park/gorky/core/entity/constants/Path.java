@@ -29,12 +29,6 @@ public class Path {
 	
 	public static final String PAGE_ADD_ATTRACTION = "/WEB-INF/jsp/admin/attraction_add.jsp";
 	
-	public static final String PAGE_TICKETS = "/WEB-INF/jsp/client/tickets.jsp";
-	
-	public static final String PAGE_ORDER_TICKET = "/WEB-INF/jsp/client/ticket.jsp";
-	
-	public static final String PAGE_ALL_TICKETS = "/WEB-INF/jsp/admin/all_tickets.jsp";
-	
 	public static final String PAGE_ALL_USERS = "/WEB-INF/jsp/admin/users.jsp";
 	
 	//Commands
