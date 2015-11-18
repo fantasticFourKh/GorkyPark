@@ -3,5 +3,4 @@ target/*
 out/*
 
 *.iml
-*.jar
 *.class
