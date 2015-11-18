@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import ua.park.gorky.core.entity.Role;
 import ua.park.gorky.core.entity.User;
 import ua.park.gorky.core.entity.exception.DBLayerException;
+import ua.park.gorky.core.entity.exception.DataRepeatException;
 import ua.park.gorky.db.connection.MySQLConnection;
 import ua.park.gorky.db.constants.DbTables;
 
@@ -12,6 +13,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Владислав on 16.11.2015.
@@ -21,18 +24,24 @@ public class UserDAO implements IUserDAO {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserDAO.class);
 
     private static final String ADD_USER = "INSERT INTO User (id_role, login, password, "
-            + "first_name, last_name, email, phone, reg_date, status_banned, dob, salt)"
+            + "firstName, lastName, email, phone, reg_date, status_banned, dob, salt)"
             + " VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
-    private static final String DELETE_USER = "DELETE FROM User WHERE idUser = ?";
+    private static final String DELETE_USER = "DELETE FROM User WHERE id_user = ?";
 
-    private static final String UPDATE_USER_PASSWORD = "UPDATE User SET Password = ? WHERE idUser =?";
+    private static final String GET_ALL_USERS = "SELECT * FROM User";
 
-    private static final String UPDATE_USER_STATUS = "UPDATE User SET status_banned = ? WHERE idUser = ?";
+    private static final String UPDATE_USER_PASSWORD = "UPDATE User SET password = ? WHERE id_user =?";
 
-    private static final String GET_USER_BY_ID = "SELECT * FROM User WHERE idUser = ?";
+    private static final String UPDATE_USER_STATUS = "UPDATE User SET status_banned = ? WHERE id_user = ?";
+
+    private static final String GET_USER_BY_ID = "SELECT * FROM user WHERE id_user = ?";
 
     private static final String GET_USER_BY_LOGIN = "SELECT * FROM User WHERE login = ?";
+
+    public static final String GET_USER_BY_LOGIN_PASSWORD = "SELECT * FROM user where Login LIKE ? AND Password LIKE ?;";
+
+    public static final String GET_USER_BY_LOGIN_EMAIL_PHONE = "SELECT * FROM user where Login = ? OR email = ? OR Phone = ?;";
 
     private static final int FIRST = 1;
 
@@ -47,6 +56,42 @@ public class UserDAO implements IUserDAO {
         } catch (SQLException ex) {
             rollback(con);
             throw new DBLayerException("Failed to get user with id = " + id, ex);
+        } finally {
+            commit(con);
+        }
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        Connection con = MySQLConnection.getWebInstance();
+        List<User> users = new ArrayList<>();
+        try (PreparedStatement pstm = con.prepareStatement(GET_ALL_USERS)) {
+            ResultSet rs = pstm.executeQuery();
+            while (rs.next()) {
+                users.add(extractUser(rs));
+            }
+            return users;
+        } catch (SQLException ex) {
+            rollback(con);
+            throw new DBLayerException("Failed to get users", ex);
+        } finally {
+            commit(con);
+        }
+    }
+
+    @Override
+    public User getUserByLoginPassword(User user) {
+        Connection con = MySQLConnection.getWebInstance();
+        try (PreparedStatement pstm = con.prepareStatement(GET_USER_BY_LOGIN_PASSWORD)) {
+            int k = 1;
+            pstm.setString(k++, user.getLogin());
+            pstm.setString(k, user.getPassword());
+            ResultSet rs = pstm.executeQuery();
+            rs.relative(FIRST);
+            return extractUser(rs);
+        } catch (SQLException e) {
+            rollback(con);
+            throw new DBLayerException("Matches login and password not found", e);
         } finally {
             commit(con);
         }
@@ -139,6 +184,41 @@ public class UserDAO implements IUserDAO {
         }
     }
 
+    @Override
+    public void checkForMatches(User user) {
+        List<User> users = new ArrayList<>();
+
+        Connection con = MySQLConnection.getWebInstance();
+        try (PreparedStatement pstm = con.prepareStatement(GET_USER_BY_LOGIN_EMAIL_PHONE)) {
+            int k = 1;
+            pstm.setString(k++, user.getLogin());
+            pstm.setString(k++, user.getEmail());
+            pstm.setString(k++, user.getPhone());
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()) {
+                users.add(extractUser(rs));
+            }
+
+            for (User u : users) {
+                if (u.getLogin().equals(user.getLogin())) {
+                    throw new DataRepeatException("User with this login is already exists");
+                }
+                if (u.getEmail().equals(user.getEmail())) {
+                    throw new DataRepeatException("User with this email is already exists");
+                }
+                if (u.getPhone().equals(user.getPhone())) {
+                    throw new DataRepeatException("User with this phone number is already exists");
+                }
+            }
+        } catch (SQLException e) {
+            rollback(con);
+            throw new DBLayerException("Matches login and password not found", e);
+        } finally {
+            commit(con);
+        }
+    }
+
     private void rollback(Connection con) {
         if (con != null) {
             try {
@@ -173,6 +253,7 @@ public class UserDAO implements IUserDAO {
             user.setRegDate(rs.getTimestamp(DbTables.User.REG_DATE));
             user.setStatusBanned(rs.getBoolean(DbTables.User.STATUS));
             user.setDob(rs.getDate(DbTables.User.DOB));
+            user.setSalt("nothing");
 
             String role = rs.getString(DbTables.User.ROLE);
             user.setRole(Role.valueOf(role));

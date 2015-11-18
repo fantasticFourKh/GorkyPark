@@ -1,5 +1,5 @@
 <%@ tag trimDirectiveWhitespaces="true" pageEncoding="UTF-8" %>
-<%@include file="/WEB-INF/jspf/directive/taglib.jspf" %>
+<%--<%@include file="/WEB-INF/jspf/directive/taglib.jspf" %>--%>
 
 <div class="header">
     <nav>

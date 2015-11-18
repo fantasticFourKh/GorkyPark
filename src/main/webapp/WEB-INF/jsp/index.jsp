@@ -3,6 +3,7 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 <c:set var="title" value="Главная" scope="page" />
 <elem:head/>
 <body>
@@ -33,7 +34,7 @@
 					href="controller?command=sort&sortType=2"><span>Дата
 						добавления&nbsp;&nbsp;<img align="absmiddle" src="image/sort.png" />
 				</span></a>
-				<c:if test="${(userRole == 'admin') || (userRole == 'editor')}">
+				<c:if test="${userRole == 'admin'}">
 					<div class="addNews" onclick="window.location.href='#add_news'">+</div>
 
 					<a href="#x" class="overlay" id="add_news"></a>
@@ -89,38 +90,38 @@
 					<c:forEach items="${news}" var="n">
 						<div class="news">
 							<div class="comments"
-								onclick="window.location.href='controller?command=oneNewsComment&idNews=${n.id}'">
+								onclick="window.location.href='controller?command=oneNewsComment&id_news=${n.id}'">
 								Комментарии
-								<div class="comCount">${n.countComment}</div>
+								<div class="comCount">${n.commentCount}</div>
 							</div>
-							<span class="author">${n.lastName}
-								${n.firstName}&nbsp;&nbsp;|&nbsp;&nbsp;<fmt:formatDate
+							<span class="author">${n.user.lastName}
+								${n.user.firstName}&nbsp;&nbsp;|&nbsp;&nbsp;<fmt:formatDate
 									var="pdate" value="${n.postDate}" type="BOTH" dateStyle="long"
 									timeStyle="Medium" /> ${pdate}
 							</span>
 							<p id="title"
-								onclick="window.location.href='controller?command=oneNewsComment&idNews=${n.id}'">${n.title}</p>
+								onclick="window.location.href='controller?command=oneNewsComment&id_news=${n.id}'">${n.title}</p>
 							<hr />
 
-							<c:if test="${not empty n.image }">
+							<c:if test="${not empty n.newsPicture }">
 								<img class="newsImage"
-									src="controller?command=imageGenerator&imgpath=${n.image }" />
+									src="controller?command=imageGenerator&imgpath=${n.newsPicture }" />
 								<br/>
 							</c:if>
 							${n.body} <br />
 							<c:choose>
 								<c:when
-									test="${(userRole == 'admin') || (userRole == 'editor')}">
+									test="${userRole == 'admin'}">
 									<div
-										onclick="window.location.href='controller?command=deleteNews&idNews=${n.id}'"
+										onclick="window.location.href='controller?command=deleteNews&id_news=${n.id}'"
 										class="deleteNews">x</div>
 									<div
-										onclick="window.location.href='controller?command=oneNewsComment&idNews=${n.id}'"
+										onclick="window.location.href='controller?command=oneNewsComment&id_news=${n.id}'"
 										class="next">Далее →</div>
 								</c:when>
 								<c:otherwise>
 									<div
-										onclick="window.location.href='controller?command=oneNewsComment&idNews=${n.id}'"
+										onclick="window.location.href='controller?command=oneNewsComment&id_news=${n.id}'"
 										class="next">Далее →</div>
 								</c:otherwise>
 							</c:choose>
