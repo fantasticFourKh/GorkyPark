@@ -1,12 +1,13 @@
-package ua.park.gorky.web.command.attraction;
+package ua.park.gorky.web.command;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ua.park.gorky.core.entity.Attraction;
 import ua.park.gorky.core.entity.constants.Path;
 import ua.park.gorky.core.entity.constants.Utility;
 import ua.park.gorky.core.entity.exception.DBLayerException;
 import ua.park.gorky.db.dao.attraction.AttractionDAO;
 import ua.park.gorky.db.dao.attraction.IAttractionDAO;
-import ua.park.gorky.web.command.Command;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +19,9 @@ import java.io.IOException;
 
 public class AddAttractionCommand extends Command {
 
-    private final IAttractionDAO attractionDAO = new AttractionDAO();
+    private static final long serialVersionUID = 9098234482308933668L;
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(AddAttractionCommand.class);
 
     @Override
     public String execute(HttpServletRequest request,
@@ -48,6 +51,7 @@ public class AddAttractionCommand extends Command {
             response.sendRedirect(request.getHeader("referer") + "#add_form");
             errorMessage = "�� ��� ���� ���������";
             session.setAttribute("addErrorMessage", errorMessage);
+            LOGGER.debug("Empty field");
             return null;
         }
 
@@ -59,6 +63,7 @@ public class AddAttractionCommand extends Command {
             response.sendRedirect(request.getHeader("referer") + "#add_form");
             errorMessage = "�������� ������";
             session.setAttribute("addErrorMessage", errorMessage);
+            LOGGER.debug("Empty field");
             return null;
         }
 
@@ -73,20 +78,23 @@ public class AddAttractionCommand extends Command {
         attraction.setAdultPrice(adultPrice);
         attraction.setChildPrice(childPrice);
         attraction.setImage(picPath);
+        IAttractionDAO dao = new AttractionDAO();
 
         try {
-            attractionDAO.addAttraction(attraction);
+            dao.addAttraction(attraction);
             String message = "�������� ����������";
             session.setAttribute("message", message);
+            LOGGER.debug("message --> " + message);
             response.sendRedirect(Path.COMMAND_VIEW_ATTRATIONS);
             return null;
-        } catch (DBLayerException e) {
+
+        } catch (DBLayerException ex) {
             errorMessage = "������";
             session.setAttribute("addErrorMessage", errorMessage);
             response.sendRedirect(request.getHeader("referer") + "#add_form");
+            LOGGER.error(ex.getMessage());
             return null;
         }
     }
-
 
 }

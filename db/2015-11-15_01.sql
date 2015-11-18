@@ -126,7 +126,7 @@ CREATE TABLE `role` (
 
 LOCK TABLES `role` WRITE;
 /*!40000 ALTER TABLE `role` DISABLE KEYS */;
-INSERT INTO `role` VALUES (1,'admin'),(3,'editor'),(2,'user');
+INSERT INTO `role` VALUES (1,'admin'),(2,'user');
 /*!40000 ALTER TABLE `role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -142,8 +142,8 @@ CREATE TABLE `user` (
   `id_role` int(11) NOT NULL,
   `login` varchar(30) NOT NULL,
   `password` varchar(16) NOT NULL,
-  `firstName` varchar(60) NOT NULL,
-  `lastName` varchar(60) NOT NULL,
+  `first_name` varchar(60) NOT NULL,
+  `last_name` varchar(60) NOT NULL,
   `email` varchar(60) NOT NULL,
   `phone` varchar(15) NOT NULL,
   `reg_date` datetime NOT NULL,

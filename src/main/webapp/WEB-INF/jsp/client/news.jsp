@@ -36,7 +36,7 @@
 
 					<form action="controller" method="post">
 						<input type="hidden" name="command" value="newComment" />
-						<input type="hidden" name="idNews" value="${news.id}" />
+						<input type="hidden" name="id_news" value="${news.id}" />
 
 						<div class="otziv">
 							<textarea class="comment" name="comment"

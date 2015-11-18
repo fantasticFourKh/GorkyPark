@@ -29,14 +29,6 @@ public class DbTables {
         public static final String POST_DATE = "post_date";
     }
 
-    //NEWS USER
-    public static final String NEWS_USER_COUNT = "count";
-
-    public static class Role {
-        public static final String ID = "id_role";
-        public static final String NAME = "name";
-    }
-
     public static class Attraction {
         public static final String ID = "id_attraction";
         public static final String TITLE = "title";
