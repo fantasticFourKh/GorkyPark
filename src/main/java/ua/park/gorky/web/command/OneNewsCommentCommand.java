@@ -4,15 +4,17 @@ package ua.park.gorky.web.command;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ua.park.gorky.core.entity.Comment;
+import ua.park.gorky.core.entity.News;
 import ua.park.gorky.core.entity.constants.Path;
 import ua.park.gorky.db.constants.DbTables;
 import ua.park.gorky.db.dao.comment.CommentDAO;
 import ua.park.gorky.db.dao.comment.ICommentDAO;
+import ua.park.gorky.db.dao.news.INewsDAO;
+import ua.park.gorky.db.dao.news.NewsDAO;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -34,14 +36,17 @@ public class OneNewsCommentCommand extends Command {
 	public String execute(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
 
-		HttpSession session = request.getSession();
-
 		int idNews = Integer.parseInt(request.getParameter(DbTables.News.ID));
 		
 		ICommentDAO commentDAO = new CommentDAO();
-		List<Comment> comments = commentDAO.getCommentsByIdNews(idNews);
+		INewsDAO newsDAO = new NewsDAO();
 
-		session.setAttribute("comments", comments);
+		News news = newsDAO.getNewsById(idNews);
+		List<Comment> comments = commentDAO.getCommentsByIdNews(idNews);
+		news.setCommentCount(comments.size());
+
+		request.setAttribute("comments", comments);
+		request.setAttribute("news", news);
 
 		LOGGER.debug("Command finished");
 		return Path.PAGE_ONE_NEWS;

@@ -10,7 +10,7 @@ import java.sql.Timestamp;
  */
 public class User extends Entity {
 
-    private Role role;
+    private int idRole;
     private String login;
     private String password;
     private String firstName;
@@ -22,12 +22,12 @@ public class User extends Entity {
     private Date dob;
     private String salt;
 
-    public Role getRole() {
-        return role;
+    public int getIdRole() {
+        return idRole;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setIdRole(int idRole) {
+        this.idRole = idRole;
     }
 
     public String getLogin() {
@@ -114,7 +114,7 @@ public class User extends Entity {
     public String toString() {
         return new ToStringBuilder(this)
                 .append("id_user=", getId())
-                .append("id_role=", role.getId())
+                .append("id_role=", idRole)
                 .append("login=", login)
                 .append("password=", password)
                 .append("firstName=", firstName)

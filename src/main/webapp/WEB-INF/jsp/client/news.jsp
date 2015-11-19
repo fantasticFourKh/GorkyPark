@@ -15,9 +15,9 @@
 				<div onclick="window.location.href='index.html'" class="next">Назад</div>
 				<p id="title">${news.title }</p>
 				<hr />
-				<c:if test="${not empty news.image }">
+				<c:if test="${not empty news.newsPicture }">
 					<img class="newsImageInfo" align="left"
-						src="controller?command=imageGenerator&imgpath=${news.image }" />
+						src="controller?command=imageGenerator&imgpath=${news.newsPicture }" />
 				</c:if>
 				${news.body } <br /> <br />
 			</div>
@@ -29,7 +29,7 @@
 
 					<c:if test="${not empty errorMessageComment}">
 						<div id="error">
-							<img src="image/alert.png" align="absmiddle" />&nbsp;&nbsp;${errorMessageComment}
+							<img src="resources/image/alert.png" align="absmiddle" />&nbsp;&nbsp;${errorMessageComment}
 						</div>
 						<br />
 					</c:if>
@@ -47,27 +47,27 @@
 				</div>
 			</c:if>
 
-			<c:if test="${not empty comment}">
+			<c:if test="${not empty comments}">
 				<div class="news">
-					<p id="title" name="COMM">${count} комментариев</p>
+					<p id="title" name="COMM">${news.commentCount} комментариев</p>
 					<hr />
-					<c:forEach items="${comment}" var="c">
+					<c:forEach items="${comments}" var="c">
 						<div class="oneComment">
-							<div class="commentInfo" id="commentName">${c.name}&nbsp;${c.surname}</div>
+							<div class="commentInfo" id="commentName">${c.user.firstName}&nbsp;${c.user.lastName}</div>
 							<div class="commentInfo" id="commentData">
 
-								<fmt:formatDate var="cdate" value="${c.postDate}" type="BOTH"
+								<fmt:formatDate var="cdate" value="${c.wroteDate}" type="BOTH"
 									dateStyle="long" timeStyle="Medium" />
 								${cdate}
 
 							</div>
 							<div class="body">&mdash; ${c.body }</div>
 							<c:if
-								test="${(user.login == c.login) || (user.login == 'admin')}">
+								test="${(user.login == c.user.login) || (user.login == 'admin')}">
 								<ul class="commentModify">
 									<li><img
-										onclick="window.location.href='controller?command=deleteComment&idComment=${c.id}'"
-										src="image/commentDel.png" /></li>
+										onclick="window.location.href='controller?command=deleteComment&id_comment=${c.id}'"
+										src="resources/image/commentDel.png" /></li>
 								</ul>
 							</c:if>
 						</div>

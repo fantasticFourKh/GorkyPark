@@ -59,19 +59,19 @@ public class LoginCommand extends Command {
                 return null;
             }
 
-            Role role = user.getRole();
+            Role role = Role.getRole(user);
 
             response.sendRedirect(request.getHeader("referer"));
 
             session.setAttribute("user", user);
-            session.setAttribute("userRole", role.getName().toLowerCase());
+            session.setAttribute("userRole", role);
             LOGGER.debug("Login: --> user = " + user.getLogin() + " Role = "
-                    + role.getName());
+                    + role);
             return null;
 
         } catch (DBLayerException ex) {
             response.sendRedirect(request.getHeader("referer"));
-            session.setAttribute("rightErrorMessage", "�������� �����/������");
+            session.setAttribute("rightErrorMessage", ex.getMessage());
             LOGGER.debug(ex.getMessage());
             return null;
         }

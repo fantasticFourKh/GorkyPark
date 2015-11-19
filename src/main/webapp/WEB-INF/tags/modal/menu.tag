@@ -1,5 +1,5 @@
 <%@ tag trimDirectiveWhitespaces="true" pageEncoding="UTF-8" %>
-<%--<%@include file="/WEB-INF/jspf/directive/taglib.jspf" %>--%>
+<%@include file="/WEB-INF/jspf/directive/taglib.jspf" %>
 
 <div class="header">
     <nav>
@@ -9,13 +9,8 @@
             <li
                     onclick="window.location.href='controller?command=attractionCatalog'"><a
                     href="controller?command=attractionCatalog">АТТРАКЦИОНЫ</a></li>
-            <c:if test="${user != null }">
-                <li onclick="window.location.href='controller?command=ticketsUser'"><a
-                        href="controller?command=ticketsUser">МОИ БИЛЕТЫ</a></li>
-            </c:if>
-
             <c:choose>
-                <c:when test="${userRole == 'admin' }">
+                <c:when test="${userRole.name == 'admin' }">
                     <li onclick="window.location.href='controller?command=profile'"><a
                             href="controller?command=profile">АДМИН МЕНЮ</a>
                         <ul>
