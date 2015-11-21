@@ -1,0 +1,12 @@
+{
+  "name": "gorkypark",
+  "description": "",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fantasticFourKh/GorkyPark.git"
+  },
+  "dependencies": {
+    "hapi": "^11.1.1"
+  }
+}
