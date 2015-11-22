@@ -2,10 +2,12 @@ package ua.park.gorky.db.dao.attraction;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ua.park.gorky.core.entity.Attraction;
 import ua.park.gorky.core.entity.exception.DBLayerException;
 import ua.park.gorky.db.connection.MySQLConnection;
-import ua.park.gorky.db.constants.DbTables;
+import ua.park.gorky.db.extractor.IEntityExtractor;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,8 +19,12 @@ import java.util.List;
 /**
  * @author Vladyslav
  */
+@Service
 public class AttractionDAO implements IAttractionDAO {
     private static final Logger LOGGER = LoggerFactory.getLogger(AttractionDAO.class);
+
+    @Autowired
+    private IEntityExtractor<Attraction> extractAttraction;
 
     private static final String ADD_ATTRACTION = "INSERT INTO Attraction "
             + " (title, description, height, att_picture,"
@@ -41,7 +47,7 @@ public class AttractionDAO implements IAttractionDAO {
             pstm.setInt(k++, attraction.getHeight());
             pstm.setString(k++, attraction.getImage());
             pstm.setInt(k++, attraction.getAdultPrice());
-            pstm.setInt(k++, attraction.getChildPrice());
+            pstm.setInt(k, attraction.getChildPrice());
             pstm.executeUpdate();
         } catch (SQLException ex) {
             rollback(con);
@@ -72,7 +78,7 @@ public class AttractionDAO implements IAttractionDAO {
         try {
             ResultSet rs = con.createStatement().executeQuery(GET_ATTRACTIONS);
             while (rs.next()) {
-                attractions.add(extractAtraction(rs));
+                attractions.add(extractAttraction.extract(rs));
             }
             return attractions;
         } catch (SQLException ex) {
@@ -90,7 +96,7 @@ public class AttractionDAO implements IAttractionDAO {
             pstm.setInt(1, id);
             ResultSet rs = pstm.executeQuery();
             rs.relative(1);
-            return extractAtraction(rs);
+            return extractAttraction.extract(rs);
         } catch (SQLException ex) {
             rollback(con);
             throw new DBLayerException("Failed to get attraction by id=" + id, ex);
@@ -120,15 +126,4 @@ public class AttractionDAO implements IAttractionDAO {
         }
     }
 
-    private Attraction extractAtraction(ResultSet rs) throws SQLException {
-        Attraction attraction = new Attraction();
-        attraction.setId(rs.getInt(DbTables.Attraction.ID));
-        attraction.setTitle(rs.getString(DbTables.Attraction.TITLE));
-        attraction.setDescription(rs.getString(DbTables.Attraction.DESC));
-        attraction.setHeight(rs.getInt(DbTables.Attraction.HEIGHT));
-        attraction.setImage(rs.getString(DbTables.Attraction.PICTURE));
-        attraction.setAdultPrice(rs.getInt(DbTables.Attraction.ADULT_PRICE));
-        attraction.setChildPrice(rs.getInt(DbTables.Attraction.CHILD_PRICE));
-        return attraction;
-    }
 }
