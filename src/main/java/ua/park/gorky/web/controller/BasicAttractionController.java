@@ -6,7 +6,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import ua.park.gorky.db.dao.attraction.IAttractionDAO;
+import ua.park.gorky.core.service.api.IAttractionService;
 
 /**
  * @author Vladyslav
@@ -16,7 +16,7 @@ import ua.park.gorky.db.dao.attraction.IAttractionDAO;
 public class BasicAttractionController {
 
     @Autowired
-    private IAttractionDAO attractionDAO;
+    private IAttractionService attractionService;
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ModelAndView add(ModelMap map) {
@@ -26,8 +26,8 @@ public class BasicAttractionController {
 
     @RequestMapping(value = "/view", method = RequestMethod.GET)
     public ModelAndView getAll() {
-        ModelAndView modelAndView = new ModelAndView("attractions");
-        modelAndView.addObject("attractions", attractionDAO.getAttractions());
+        ModelAndView modelAndView = new ModelAndView("index");
+        modelAndView.addObject("attractions", attractionService.getAll());
         return modelAndView;
     }
 }

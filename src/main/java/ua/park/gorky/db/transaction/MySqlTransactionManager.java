@@ -27,9 +27,9 @@ public class MySqlTransactionManager implements TransactionManager {
         try {
             connection.commit();
         } catch (SQLException e) {
+            rollback(connection);
             throw new TranscationException("Transaction not commited.", e);
         } finally {
-            rollback(connection);
             connectionPool.remove();
         }
         return result;
