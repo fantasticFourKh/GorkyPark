@@ -1,10 +1,11 @@
 package ua.park.gorky.web.controller;
 
+import org.apache.catalina.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ua.park.gorky.core.service.api.IAttractionService;
 
@@ -19,7 +20,7 @@ public class BasicAttractionController {
     private IAttractionService attractionService;
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ModelAndView add(ModelMap map) {
+    public ModelAndView add(@RequestParam String name, @RequestParam Session session) {
         ModelAndView modelAndView = new ModelAndView("ViewName");
         return modelAndView;
     }
