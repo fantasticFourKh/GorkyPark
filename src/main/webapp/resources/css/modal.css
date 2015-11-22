@@ -1,0 +1,157 @@
+.panel {
+	background-color: #444;
+	height: 34px;
+	padding: 10px;
+}
+
+.panel a#login_pop,.panel a#join_pop {
+	border: 2px solid #aaa;
+	color: #fff;
+	display: block;
+	float: right;
+	margin-right: 10px;
+	padding: 5px 10px;
+	text-decoration: none;
+	text-shadow: 1px 1px #000;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	-ms-border-radius: 10px;
+	-o-border-radius: 10px;
+	border-radius: 10px;
+}
+
+a#login_pop:hover,a#join_pop:hover {
+	border-color: #eee;
+}
+
+.overlay {
+	background-color: rgba(0, 0, 0, 0.6);
+	bottom: 0;
+	cursor: default;
+	left: 0;
+	opacity: 0;
+	position: fixed;
+	right: 0;
+	top: 0;
+	visibility: hidden;
+	z-index: 1;
+	-webkit-transition: opacity .5s;
+	-moz-transition: opacity .5s;
+	-ms-transition: opacity .5s;
+	-o-transition: opacity .5s;
+	transition: opacity .5s;
+}
+
+.overlay:target {
+	visibility: visible;
+	opacity: 1;
+}
+
+.popup {
+	border: 1px solid #e1e1e1;
+	background-color: rgba(255, 255, 255, 0.9);
+	display: inline-block;
+	left: 50%;
+	opacity: 0;
+	position: fixed;
+	text-align: justify;
+	top: 40%;
+	visibility: hidden;
+	z-index: 10;
+	-webkit-transform: translate(-50%, -50%);
+	-moz-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	-o-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+	-webkit-transition: opacity .5s, top .5s;
+	-moz-transition: opacity .5s, top .5s;
+	-ms-transition: opacity .5s, top .5s;
+	-o-transition: opacity .5s, top .5s;
+	transition: opacity .5s, top .5s;
+	border-radius: 5px;
+}
+
+.overlay:target+.popup {
+	top: 50%;
+	opacity: 1;
+	visibility: visible;
+	padding: 0 30px 30px 30px;
+	width: 400px;
+}
+
+#al {
+	text-align: center;
+}
+
+.close {
+	background-color: rgba(0, 0, 0, 0.8);
+	height: 30px;
+	line-height: 30px;
+	position: absolute;
+	right: 0;
+	text-align: center;
+	text-decoration: none;
+	top: -15px;
+	width: 30px;
+	-webkit-border-radius: 15px;
+	-moz-border-radius: 15px;
+	-ms-border-radius: 15px;
+	-o-border-radius: 15px;
+	border-radius: 15px;
+}
+
+.close:before {
+	color: rgba(255, 255, 255, 0.9);
+	content: "X";
+	font-size: 24px;
+	text-shadow: 0 -1px rgba(0, 0, 0, 0.9);
+}
+
+.close:hover {
+	background-color: rgba(64, 128, 128, 0.8);
+}
+
+.popup p,.popup div {
+	margin-bottom: 10px;
+}
+
+table.addAttraction {
+	width: 400px;
+	border-spacing: 5px;
+}
+
+table.addAttraction td {
+	text-align: right;
+	vertical-align: top;
+	text-align: right;
+}
+
+table.addAttraction td:first-child {
+	width: 140px;
+}
+
+table.addAttraction td {
+	text-align: right;
+	vertical-align: middle;
+}
+
+table.addAttraction tr {
+	
+}
+
+#attrAdd {
+	width: 228px;
+	height: 18px;
+}
+
+td#error {
+	font-weight: bold;
+	border-radius: 5px;
+	text-align: left;
+	border: 1px solid #550000;
+	vertical-align: middle;
+	background-color: #f2dede;
+	border-color: #eed3d7;
+	color: #b94a48;
+	padding: 3px;
+}
