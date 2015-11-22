@@ -3,10 +3,8 @@ package ua.park.gorky.web.command;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ua.park.gorky.core.entity.News;
 import ua.park.gorky.core.entity.exception.DBLayerException;
 import ua.park.gorky.db.constants.DbTables;
-import ua.park.gorky.db.dao.news.INewsDAO;
 import ua.park.gorky.db.dao.news.NewsDAO;
 
 import javax.servlet.ServletException;
@@ -26,12 +24,8 @@ public class DeleteNewsCommand extends Command {
 
         int idNews = Integer.parseInt(request.getParameter(DbTables.News.ID));
 
-        INewsDAO dao = new NewsDAO();
-        News news = new News();
-        news.setId(idNews);
-
         try {
-            dao.deleteNewsById(idNews);
+            new NewsDAO().deleteNewsById(idNews);
             response.sendRedirect(request.getHeader("referer"));
             LOGGER.debug("Delete command finished");
             return null;

@@ -32,27 +32,27 @@
 						</p>
 						<p>
 							<strong>Статус (Заблокирован/Незаблокирован)</strong>:
-							${user.blocked }
+							${user.statusBanned }
 						</p>
 					</div>
 					<div class="dataButton">
 						<div onclick="window.location.href='controller?command=ticketsUser'">
 							<span>Мои билеты</span><span><img width="35" height="35"
-								align="absmiddle" src="image/icon/ticket.png" /></span>
+								align="absmiddle" src="resources/image/icon/ticket.png" /></span>
 						</div>
 						<c:if test="${cartCount != '0'}">
 							<div onclick="window.location.href='controller?command=basket'">
 								<span>Корзина</span><span><img width="35" height="35"
-									align="absmiddle" src="image/icon/cart.png" /></span>
+									align="absmiddle" src="resources/image/icon/cart.png" /></span>
 							</div>
 						</c:if>
 						<div onclick="window.location.href='controller?command=attractionCatalog'">
 							<span>Каталог</span><span><img width="35" height="35"
-								align="absmiddle" src="image/icon/catalog.png" /></span>
+								align="absmiddle" src="resources/image/icon/catalog.png" /></span>
 						</div>
 						<div onclick="window.location.href='index.html'">
 							<span>Новости</span><span><img width="35" height="35"
-								align="absmiddle" src="image/icon/news.png" /></span>
+								align="absmiddle" src="resources/image/icon/news.png" /></span>
 						</div>
 					</div>
 				</div>
@@ -68,13 +68,13 @@
 					<table class="pass">
 						<c:if test="${not empty message_1}">
 							<tr>
-								<td colspan="2" id="ok"><img src="image/ok.png"
+								<td colspan="2" id="ok"><img src="resources/image/ok.png"
 									align="absmiddle" />&nbsp;&nbsp;${message_1}</td>
 							</tr>
 						</c:if>
 						<c:if test="${not empty errorMessage_1}">
 							<tr>
-								<td colspan="2" id="error"><img src="image/alert.png"
+								<td colspan="2" id="error"><img src="resources/image/alert.png"
 									align="absmiddle" />&nbsp;&nbsp;${errorMessage_1}</td>
 							</tr>
 						</c:if>

@@ -12,7 +12,7 @@
 	<div class="all">
 		<div class="newsContainer">
 			<div class="news">
-				<span id="add"> <c:if test="${userRole == 'admin' }">
+				<span id="add"> <c:if test="${userRole.name == 'admin' }">
 						<div onclick="window.location.href='#add_form'"
 							class="addSettingAttraction">
 							<span>Добавить аттракцион</span> <img width="30" height="30"

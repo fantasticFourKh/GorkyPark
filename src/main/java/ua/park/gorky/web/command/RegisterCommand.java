@@ -58,10 +58,11 @@ public class RegisterCommand extends Command {
 		String date = request.getParameter("dob");
 
 		String roleName = null;
+		Role role;
 		if (session.getAttribute("userRole") != null) {
-			roleName = request.getParameter("roleName");
+			role = Role.ADMIN;
 		} else {
-			roleName = "User";
+			role = Role.USER;
 		}
 
 		boolean status = false;
@@ -69,9 +70,7 @@ public class RegisterCommand extends Command {
 		User user = new User();
 
 		Timestamp regDate = Utility.getDate();
-		Role role = Role.valueOf(roleName);
-
-		user.setRole(role);
+		user.setIdRole(role.getId());
 		user.setLogin(login);
 		user.setPassword(pass);
 		user.setFirstName(first_name);
@@ -123,18 +122,6 @@ public class RegisterCommand extends Command {
 				LOGGER.error("rightErrorMessage --> " + rightErrorMessage);
 				return null;
 			}
-
-/*			try {
-				dob = Date.valueOf(date);
-				user.setDob(dob);
-			} catch (IllegalArgumentException e) {
-				rightErrorMessage = "������� �������� ����";
-				session.setAttribute("rightErrorMessage", rightErrorMessage);
-				response.sendRedirect(redirRegister);
-				session.setAttribute("regUser", user);
-				LOG.error("rightErrorMessage --> " + rightErrorMessage);
-				return null;
-			}*/
 
 			try {
 				dao.addUser(user);

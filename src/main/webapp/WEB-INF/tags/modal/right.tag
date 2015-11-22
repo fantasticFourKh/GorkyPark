@@ -11,13 +11,13 @@
                         <span id="login">Вы вошли как:&nbsp;&nbsp;</span>${user.login}
                         <hr />
                         <a href="controller?command=profile"><img width="30"
-                                                                  align="absmiddle" height="30" src="image/account2.png" /></a>&nbsp;
+                                                                  align="absmiddle" height="30" src="resources/image/account2.png" /></a>&nbsp;
                         <a href="controller?command=logout"><img width="30"
-                                                                 align="absmiddle" height="30" src="image/exit.png" /></a>
-                        <c:if test="${userRole == 'admin'}">
+                                                                 align="absmiddle" height="30" src="resources/image/exit.png" /></a>
+                        <c:if test="${userRole.name == 'admin'}">
                             &nbsp;<a href="controller?command=registerPage"><img
                                 width="30" align="absmiddle" height="30"
-                                src="image/register.png" /></a>
+                                src="resources/image/register.png" /></a>
                         </c:if>
                         <br />
                     </div>
@@ -28,7 +28,7 @@
                         <hr />
                         <c:if test="${not empty rightErrorMessage}">
                             <div id="error">
-                                <img src="image/error.png" align="absmiddle" />&nbsp;&nbsp;${rightErrorMessage}
+                                <img src="resources/image/error.png" align="absmiddle" />&nbsp;&nbsp;${rightErrorMessage}
                             </div>
                         </c:if>
                         <form action="controller" method="post">
@@ -59,12 +59,12 @@
                     <input type="hidden" name="command" value="register" />
                     <c:if test="${not empty rightErrorMessage}">
                         <div id="error">
-                            <img src="image/error.png" align="absmiddle" />&nbsp;&nbsp;${rightErrorMessage}
+                            <img src="resources/image/error.png" align="absmiddle" />&nbsp;&nbsp;${rightErrorMessage}
                         </div>
                     </c:if>
                     <table class="register">
 
-                        <c:if test="${userRole == 'admin'}">
+                        <c:if test="${userRole.name == 'admin'}">
                             <tr>
                                 <td>Роль:&nbsp;</td>
                                 <td><select class="field" id="dropDown" name="roleName">

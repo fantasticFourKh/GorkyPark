@@ -49,7 +49,7 @@ public class NewCommentCommand extends Command {
 		System.out.println("ERROR --> " + user);
 		
 		if(body.isEmpty()) {
-			errorMessageComment = "���� ������ !";
+			errorMessageComment = "Empty comment !";
 			session.setAttribute("errorMessageComment", errorMessageComment);
 			LOGGER.debug("Command finished");
 			response.sendRedirect(request.getHeader("referer"));

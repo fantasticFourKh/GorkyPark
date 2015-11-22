@@ -35,6 +35,8 @@ public class NewsDAO implements INewsDAO {
 
     private static final String GET_NEWS_BY_TITLE_BODY = "SELECT * FROM News WHERE title LIKE ? OR body LIKE ? ORDER BY id_News DESC;";
 
+    private static final String DELETE_COMMENT_BY_NEWS = "DELETE FROM Comment WHERE id_news = ?;";
+
     private static final int FIRST = 1;
 
     private IUserDAO userDAO = new UserDAO();
@@ -61,9 +63,15 @@ public class NewsDAO implements INewsDAO {
     @Override
     public void deleteNewsById(int id) {
         Connection con = MySQLConnection.getWebInstance();
-        try (PreparedStatement pstm = con.prepareStatement(DELETE_NEWS)) {
+        try {
+            PreparedStatement pstm = con.prepareStatement(DELETE_COMMENT_BY_NEWS);
             pstm.setInt(FIRST, id);
             pstm.executeUpdate();
+
+            pstm = con.prepareStatement(DELETE_NEWS);
+            pstm.setInt(FIRST, id);
+            pstm.executeUpdate();
+            pstm.close();
         } catch (SQLException ex) {
             rollback(con);
             throw new DBLayerException("Failed to delete news with id=" + id, ex);

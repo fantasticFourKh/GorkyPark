@@ -30,11 +30,11 @@
 				</form>
 				<a id="nondecoration" href="controller?command=sort&sortType=1"><span
 					id="brd">Комментарии&nbsp;&nbsp;<img align="absmiddle"
-						src="image/sort.png" /></span></a><a id="nondecoration"
+						src="resources/image/sort.png" /></span></a><a id="nondecoration"
 					href="controller?command=sort&sortType=2"><span>Дата
-						добавления&nbsp;&nbsp;<img align="absmiddle" src="image/sort.png" />
+						добавления&nbsp;&nbsp;<img align="absmiddle" src="resources/image/sort.png" />
 				</span></a>
-				<c:if test="${userRole == 'admin'}">
+				<c:if test="${userRole.name == 'admin'}">
 					<div class="addNews" onclick="window.location.href='#add_news'">+</div>
 
 					<a href="#x" class="overlay" id="add_news"></a>
@@ -111,7 +111,7 @@
 							${n.body} <br />
 							<c:choose>
 								<c:when
-									test="${userRole == 'admin'}">
+									test="${userRole.name == 'admin'}">
 									<div
 										onclick="window.location.href='controller?command=deleteNews&id_news=${n.id}'"
 										class="deleteNews">x</div>

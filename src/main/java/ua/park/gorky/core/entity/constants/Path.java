@@ -19,7 +19,7 @@ public class Path {
 	
 	public static final String PAGE_USER_PROFILE = "/WEB-INF/jsp/client/user_profile.jsp";
 	
-	public static final String PAGE_ONE_NEWS = "WEB-INF/jsp/client/news.jsp";
+	public static final String PAGE_ONE_NEWS = "/WEB-INF/jsp/client/news.jsp";
 	
 	public static final String PAGE_REGISTER = "/WEB-INF/jsp/register.jsp";
 	

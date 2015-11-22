@@ -2,7 +2,6 @@ package ua.park.gorky.db.dao.user;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ua.park.gorky.core.entity.Role;
 import ua.park.gorky.core.entity.User;
 import ua.park.gorky.core.entity.exception.DBLayerException;
 import ua.park.gorky.core.entity.exception.DataRepeatException;
@@ -24,7 +23,7 @@ public class UserDAO implements IUserDAO {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserDAO.class);
 
     private static final String ADD_USER = "INSERT INTO User (id_role, login, password, "
-            + "firstName, lastName, email, phone, reg_date, status_banned, dob, salt)"
+            + "first_name, last_name, email, phone, reg_date, status_banned, dob, salt)"
             + " VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
     private static final String DELETE_USER = "DELETE FROM User WHERE id_user = ?";
@@ -39,7 +38,7 @@ public class UserDAO implements IUserDAO {
 
     private static final String GET_USER_BY_LOGIN = "SELECT * FROM User WHERE login = ?";
 
-    public static final String GET_USER_BY_LOGIN_PASSWORD = "SELECT * FROM user where Login LIKE ? AND Password LIKE ?;";
+    public static final String GET_USER_BY_LOGIN_PASSWORD = "SELECT * FROM user where login LIKE ? AND password LIKE ?;";
 
     public static final String GET_USER_BY_LOGIN_EMAIL_PHONE = "SELECT * FROM user where Login = ? OR email = ? OR Phone = ?;";
 
@@ -83,7 +82,7 @@ public class UserDAO implements IUserDAO {
     public User getUserByLoginPassword(User user) {
         Connection con = MySQLConnection.getWebInstance();
         try (PreparedStatement pstm = con.prepareStatement(GET_USER_BY_LOGIN_PASSWORD)) {
-            int k = 1;
+            int k = FIRST;
             pstm.setString(k++, user.getLogin());
             pstm.setString(k, user.getPassword());
             ResultSet rs = pstm.executeQuery();
@@ -118,7 +117,7 @@ public class UserDAO implements IUserDAO {
         Connection con = MySQLConnection.getWebInstance();
         try (PreparedStatement pstm = con.prepareStatement(ADD_USER)) {
             int k = FIRST;
-            pstm.setInt(k++, user.getRole().getId());
+            pstm.setInt(k++, user.getIdRole());
             pstm.setString(k++, user.getLogin());
             pstm.setString(k++, user.getPassword());
             pstm.setString(k++, user.getFirstName());
@@ -244,6 +243,7 @@ public class UserDAO implements IUserDAO {
         User user = new User();
         try {
             user.setId(rs.getInt(DbTables.User.ID));
+            user.setIdRole(rs.getInt(DbTables.User.ROLE));
             user.setLogin(rs.getString(DbTables.User.LOGIN));
             user.setPassword(rs.getString(DbTables.User.PASS));
             user.setFirstName(rs.getString(DbTables.User.NAME));
@@ -254,9 +254,6 @@ public class UserDAO implements IUserDAO {
             user.setStatusBanned(rs.getBoolean(DbTables.User.STATUS));
             user.setDob(rs.getDate(DbTables.User.DOB));
             user.setSalt("nothing");
-
-            String role = rs.getString(DbTables.User.ROLE);
-            user.setRole(Role.valueOf(role));
 
             return user;
         } catch (SQLException ex) {

@@ -1239,7 +1239,7 @@ a {
 	display: block;
 	text-align: left;
 	margin-bottom: 10px;
-	padding: 10px 0 10px 5px;
+	padding: 5px 0 0px 5px;
 	font-weight: bold;
 	color: #555555;
 }
@@ -1247,7 +1247,7 @@ a {
 .dataButton div:hover {
 	background-color: rgba(255, 255, 255, 0.8);
 	border: 2px dotted #009485;
-	padding: 8px 0 8px 5px;
+	padding: 3px 0 3px 5px;
 	color: #555555;
 	border-radius: 5px;
 	cursor: pointer;
