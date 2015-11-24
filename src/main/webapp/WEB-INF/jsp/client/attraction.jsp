@@ -13,7 +13,7 @@
 			<div class="attraction">
 				<p id="title">Аттракцион: ${attraction.title }</p>
 				<hr />
-				<img src="controller?command=imageGenerator&imgpath=${attraction.image }" alt="picture" />
+				<img src="/image?imgPath=${attraction.image }" alt="picture" />
 				<br/>
 				<p>
 					<strong>Описание</strong>: ${attraction.description }

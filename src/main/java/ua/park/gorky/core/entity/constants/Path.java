@@ -23,9 +23,9 @@ public class Path {
 	
 	public static final String PAGE_REGISTER = "/WEB-INF/jsp/register.jsp";
 	
-	public static final String PAGE_ATTRACTION_CATALOG = "/WEB-INF/jsp/client/attractionCatalog.jsp";
+	public static final String PAGE_ATTRACTION_CATALOG = "/WEB-INF/jsp/client/attractions.jsp";
 	
-	public static final String PAGE_ATTRACTION = "/WEB-INF/jsp/client/attractionInfo.jsp";
+	public static final String PAGE_ATTRACTION = "/WEB-INF/jsp/client/attraction.jsp";
 	
 	public static final String PAGE_ADD_ATTRACTION = "/WEB-INF/jsp/admin/attraction_add.jsp";
 	

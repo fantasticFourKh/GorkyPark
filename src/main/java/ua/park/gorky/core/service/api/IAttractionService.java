@@ -12,4 +12,6 @@ import java.util.List;
 public interface IAttractionService {
 
     List<Attraction> getAll();
+
+    Attraction getById(int id);
 }
