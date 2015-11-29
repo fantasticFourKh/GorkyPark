@@ -13,15 +13,12 @@
 		<div class="main-container">
 			<div class="main-container-content">
 				<span id="add"> <c:if test="${userRole.name == 'admin' }">
-						<div onclick="window.location.href='#add_form'"
-							class="addSettingAttraction">
+						<a href="/attraction/page" class="addSettingAttraction">
 							<span>Добавить аттракцион</span> <img width="30" height="30"
 								align="absmiddle" src="image/setting.png" />
-						</div>
+						</a>
 					</c:if>
 				</span>
-				<mod:addAttraction/>
-
 				<p id="title">Аттракционы</p>
 				<hr />
 				<c:forEach items="${attractions }" var="item">

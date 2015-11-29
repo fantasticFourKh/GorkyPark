@@ -3,4 +3,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib tagdir="/WEB-INF/tags/element" prefix="elem" %>
 <%@ taglib tagdir="/WEB-INF/tags/modal" prefix="mod" %>
+<%@ taglib tagdir="/WEB-INF/tags/modal/user" prefix="user" %>
 

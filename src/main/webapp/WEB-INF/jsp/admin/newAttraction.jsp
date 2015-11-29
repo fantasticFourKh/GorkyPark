@@ -22,7 +22,7 @@
 
                         <div class="col-lg-8">
                             <input type="text" class="form-control" id="inputTitle" placeholder="Title"
-                                   value="${validationErrors.inputTitle}">
+                                   value="${invalidAttractionBean.title}">
                         </div>
                     </div>
                     <div class="form-group">
@@ -30,7 +30,7 @@
 
                         <div class="col-lg-8">
                             <input type="text" class="form-control" id="inputDesc" placeholder="Description"
-                                   value="${validationErrors.inputDesc}">
+                                   value="${invalidAttractionBean.description}">
                         </div>
                     </div>
                     <div class="form-group">
@@ -38,7 +38,7 @@
 
                         <div class="col-lg-8">
                             <input type="text" class="form-control" id="inputHeight" placeholder="Height"
-                                   value="${validationErrors.inputHeight}">
+                                   value="${invalidAttractionBean.height}">
                         </div>
                     </div>
                     <div class="form-group">
@@ -46,7 +46,7 @@
 
                         <div class="col-lg-8">
                             <input type="text" class="form-control" id="inputAdultPrice" placeholder="Adult price"
-                                   value="${validationErrors.inputAdultPrice}">
+                                   value="${invalidAttractionBean.adultPrice}">
                         </div>
                     </div>
                     <div class="form-group">
@@ -54,7 +54,7 @@
 
                         <div class="col-lg-8">
                             <input type="text" class="form-control" id="inputChildPrice" placeholder="Child price"
-                                   value="${validationErrors.inputChildPrice}">
+                                   value="${invalidAttractionBean.childPrice}">
                         </div>
                     </div>
                     <div class="form-group">
@@ -66,7 +66,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col-lg-10 col-lg-offset-2">
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary">Add</button>
                         </div>
                     </div>
                 </fieldset>

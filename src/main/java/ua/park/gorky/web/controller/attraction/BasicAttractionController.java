@@ -13,6 +13,7 @@ import ua.park.gorky.core.bean.AttractionBean;
 import ua.park.gorky.core.constants.Path;
 import ua.park.gorky.core.constants.Utility;
 import ua.park.gorky.core.service.api.IAttractionService;
+import ua.park.gorky.core.util.CollectionUtil;
 import ua.park.gorky.core.validator.api.IBeanValidator;
 import ua.park.gorky.web.constants.WebConsts;
 import ua.park.gorky.web.controller.AbstractController;
@@ -30,7 +31,7 @@ import java.util.Map;
  * @author Vladyslav
  */
 @Controller
-@RequestMapping(WebConsts.Mapping.ATTRACTION_ROOT)
+@RequestMapping(WebConsts.Mapping.ATTRACTION)
 public class BasicAttractionController extends AbstractController {
     private static final Logger LOGGER = LoggerFactory.getLogger(BasicAttractionController.class);
 
@@ -58,29 +59,32 @@ public class BasicAttractionController extends AbstractController {
         return modelAndView;
     }
 
+    @RequestMapping(value = WebConsts.Mapping.PAGE, method = RequestMethod.GET)
+    public String getAddPage() {
+        return WebConsts.View.ATTRACTION_NEW;
+    }
+
     @RequestMapping(value = WebConsts.Mapping.ADD, method = RequestMethod.POST)
     public ModelAndView add(HttpServletRequest request, ModelMap modelMap) throws IOException, ServletException {
 
         AttractionBean bean = buildBean(modelMap);
         Map<String, List<String>> errors = beanValidator.validateBean(bean);
-        ModelAndView modelAndView = new ModelAndView();
+        ModelAndView modelAndView = createMaV();
 
         HttpSession session = request.getSession();
 
-        if (notValid(errors)) {
+        if (CollectionUtil.isNotEmpty(errors)) {
             modelAndView.setViewName(WebConsts.View.ATTRACTION_NEW);
             modelAndView.addObject(WebConsts.ClientSideEntities.VALIDATION_ERRORS, errors);
             session.setAttribute(WebConsts.ClientSideEntities.ATTRACTION_INVALID_BEAN, bean);
-            LOGGER.debug("Validation not passed. Sending back: ");
+            LOGGER.debug("Validation not passed. Sending back.");
             return modelAndView;
         }
         writeFile(request.getPart("inputImage"));
+        attractionService.create(bean);
+
         modelAndView.setViewName(WebConsts.View.ATTRACTIONS);
         return modelAndView;
-    }
-
-    private boolean notValid(Map<String, List<String>> errors) {
-        return !errors.isEmpty();
     }
 
     private AttractionBean buildBean(ModelMap modelMap) {

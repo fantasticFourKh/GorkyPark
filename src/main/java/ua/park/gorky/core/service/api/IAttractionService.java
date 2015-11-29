@@ -1,6 +1,7 @@
 package ua.park.gorky.core.service.api;
 
 import org.springframework.stereotype.Service;
+import ua.park.gorky.core.bean.AttractionBean;
 import ua.park.gorky.core.entity.Attraction;
 
 import java.util.List;
@@ -10,6 +11,8 @@ import java.util.List;
  */
 @Service
 public interface IAttractionService {
+
+    void create(AttractionBean bean);
 
     List<Attraction> getAll();
 

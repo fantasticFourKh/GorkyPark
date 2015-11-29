@@ -1,12 +1,10 @@
 
 package ua.park.gorky.web.command;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import ua.park.gorky.core.constants.Utility;
 import ua.park.gorky.core.entity.Comment;
 import ua.park.gorky.core.entity.News;
 import ua.park.gorky.core.entity.User;
-import ua.park.gorky.core.constants.Utility;
 import ua.park.gorky.core.exception.DBLayerException;
 import ua.park.gorky.db.constants.DbTables;
 import ua.park.gorky.db.dao.comment.CommentDAO;
@@ -32,7 +30,6 @@ public class NewCommentCommand extends Command {
 
 	private static final long serialVersionUID = -3071536593627692473L;
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(LogoutCommand.class);
 
 	@Override
 	public String execute(HttpServletRequest request,
@@ -51,7 +48,6 @@ public class NewCommentCommand extends Command {
 		if(body.isEmpty()) {
 			errorMessageComment = "Empty comment !";
 			session.setAttribute("errorMessageComment", errorMessageComment);
-			LOGGER.debug("Command finished");
 			response.sendRedirect(request.getHeader("referer"));
 			return null;
 		}
@@ -69,13 +65,11 @@ public class NewCommentCommand extends Command {
 
 		try {
 			dao.addComment(comment);
-			LOGGER.debug("Command finished");
 			response.sendRedirect(request.getHeader("referer"));
 			return null;
 		} catch (DBLayerException ex) {
 			errorMessageComment = ex.getMessage();
 			session.setAttribute("errorMessageComment", errorMessageComment);
-			LOGGER.error(ex.getMessage());
 			response.sendRedirect(request.getHeader("referer"));
 			return null;
 		}

@@ -21,9 +21,6 @@ public class CommandContainer {
 	static {
 		//Out of control
 		commands.put("main", new NewsCommand());
-		commands.put("login", new LoginCommand());
-		commands.put("logout", new LogoutCommand());
-		commands.put("register", new RegisterCommand());
 		commands.put("registerPage", new RegisterPageCommand());
 		commands.put("sort", new SortCommand());
 		commands.put("search", new SearchCommand());
@@ -32,7 +29,6 @@ public class CommandContainer {
 		commands.put("profile", new ProfileCommand());
 		commands.put("showUserProfile", new UserProfileCommand());
 		commands.put("newComment", new NewCommentCommand());
-		commands.put("changeUserPassword", new ChangeUserPasswordCommand());
 		commands.put("deleteComment", new DeleteCommentCommand());
 		commands.put("oneNewsComment", new OneNewsCommentCommand());
 
