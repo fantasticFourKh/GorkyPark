@@ -8,8 +8,8 @@
 <elem:head/>
 <body>
 	<mod:menu/>
-	<div class="all">
-		<div class="newsContainer">
+	<div class="main">
+		<div class="main-container">
 			<div class="attraction">
 				<p id="title">Аттракцион: ${attraction.title }</p>
 				<hr />

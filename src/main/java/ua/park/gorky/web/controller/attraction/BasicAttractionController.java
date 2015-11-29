@@ -10,19 +10,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ua.park.gorky.core.bean.AttractionBean;
-import ua.park.gorky.core.entity.Attraction;
-import ua.park.gorky.core.entity.constants.Path;
-import ua.park.gorky.core.entity.constants.Utility;
-import ua.park.gorky.core.entity.exception.DBLayerException;
+import ua.park.gorky.core.constants.Path;
+import ua.park.gorky.core.constants.Utility;
 import ua.park.gorky.core.service.api.IAttractionService;
-import ua.park.gorky.db.dao.attraction.AttractionDAO;
-import ua.park.gorky.db.dao.attraction.IAttractionDAO;
+import ua.park.gorky.core.validator.api.IBeanValidator;
 import ua.park.gorky.web.constants.WebConsts;
 import ua.park.gorky.web.controller.AbstractController;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Vladyslav
@@ -34,6 +36,9 @@ public class BasicAttractionController extends AbstractController {
 
     @Autowired
     private IAttractionService attractionService;
+
+    @Autowired
+    private IBeanValidator beanValidator;
 
     @RequestMapping(value = WebConsts.Mapping.VIEW, method = RequestMethod.GET)
     public ModelAndView getAll() {
@@ -54,77 +59,36 @@ public class BasicAttractionController extends AbstractController {
     }
 
     @RequestMapping(value = WebConsts.Mapping.ADD, method = RequestMethod.POST)
-    public ModelAndView add(@RequestParam HttpSession session, ModelMap modelMap) {
+    public ModelAndView add(HttpServletRequest request, ModelMap modelMap) throws IOException, ServletException {
 
         AttractionBean bean = buildBean(modelMap);
+        Map<String, List<String>> errors = beanValidator.validateBean(bean);
+        ModelAndView modelAndView = new ModelAndView();
 
-        String errorMessage = null;
+        HttpSession session = request.getSession();
 
-        String picPath = null;
-        String savePath = Path.ATTRACTION_IMAGES;
-
-
-        if (title.isEmpty() || desc.isEmpty() || desc.isEmpty()
-                || heightStr.isEmpty()
-                || adultPriceStr.isEmpty() || childPriceStr.isEmpty()) {
-            response.sendRedirect(request.getHeader("referer") + "#add_form");
-            errorMessage = "�� ��� ���� ���������";
-            session.setAttribute("addErrorMessage", errorMessage);
-            LOGGER.debug("Empty field");
-            return null;
+        if (notValid(errors)) {
+            modelAndView.setViewName(WebConsts.View.ATTRACTION_NEW);
+            modelAndView.addObject(WebConsts.ClientSideEntities.VALIDATION_ERRORS, errors);
+            session.setAttribute(WebConsts.ClientSideEntities.ATTRACTION_INVALID_BEAN, bean);
+            LOGGER.debug("Validation not passed. Sending back: ");
+            return modelAndView;
         }
-
-        try {
-            height = Integer.parseInt(heightStr);
-            adultPrice = Integer.parseInt(adultPriceStr);
-            childPrice = Integer.parseInt(childPriceStr);
-        } catch (NumberFormatException e) {
-            response.sendRedirect(request.getHeader("referer") + "#add_form");
-            errorMessage = "�������� ������";
-            session.setAttribute("addErrorMessage", errorMessage);
-            LOGGER.debug("Empty field");
-            return null;
-        }
-
-        Part part = request.getPart("image");
-        picPath = savePath + File.separator + Utility.createNewPath();
-        part.write(picPath);
-
-        Attraction attraction = new Attraction();
-        attraction.setTitle(title);
-        attraction.setDescription(desc);
-        attraction.setHeight(height);
-        attraction.setAdultPrice(adultPrice);
-        attraction.setChildPrice(childPrice);
-        attraction.setImage(picPath);
-        IAttractionDAO dao = new AttractionDAO();
-
-        try {
-            dao.addAttraction(attraction);
-            String message = "�������� ����������";
-            session.setAttribute("message", message);
-            LOGGER.debug("message --> " + message);
-            response.sendRedirect(Path.COMMAND_VIEW_ATTRATIONS);
-            return null;
-
-        } catch (DBLayerException ex) {
-            errorMessage = "������";
-            session.setAttribute("addErrorMessage", errorMessage);
-            response.sendRedirect(request.getHeader("referer") + "#add_form");
-            LOGGER.error(ex.getMessage());
-            return null;
-        }
-
-        ModelAndView modelAndView = new ModelAndView("ViewName");
+        writeFile(request.getPart("inputImage"));
+        modelAndView.setViewName(WebConsts.View.ATTRACTIONS);
         return modelAndView;
     }
 
+    private boolean notValid(Map<String, List<String>> errors) {
+        return !errors.isEmpty();
+    }
+
     private AttractionBean buildBean(ModelMap modelMap) {
-        String title = (String) modelMap.get("title");
-        String desc = (String) modelMap.get("desc");
-        String height = (String) modelMap.get("height");
-        String adultPrice = (String) modelMap.get("adultPrice");
-        String childPrice = (String) modelMap.get("childPrice");
+        String title = (String) modelMap.get("inputTitle");
+        String desc = (String) modelMap.get("inputDesc");
+        String height = (String) modelMap.get("inputHeight");
+        String adultPrice = (String) modelMap.get("inputAdultPrice");
+        String childPrice = (String) modelMap.get("inputChildPrice");
 
         AttractionBean bean = new AttractionBean();
         bean.setTitle(title);
@@ -133,6 +97,17 @@ public class BasicAttractionController extends AbstractController {
         bean.setAdultPrice(adultPrice);
         bean.setChildPrice(childPrice);
         return bean;
+    }
+
+    private void writeFile(Part imagePart) throws IOException {
+        String savePath = Path.ATTRACTION_IMAGES;
+
+        File folder = new File(savePath);
+        if (!folder.exists()) {
+            folder.mkdir();
+        }
+        String picPath = savePath + File.separator + Utility.createNewPath();
+        imagePart.write(picPath);
     }
 
 }

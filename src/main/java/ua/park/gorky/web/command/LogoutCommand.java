@@ -2,7 +2,7 @@ package ua.park.gorky.web.command;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ua.park.gorky.core.entity.constants.Path;
+import ua.park.gorky.core.constants.Path;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

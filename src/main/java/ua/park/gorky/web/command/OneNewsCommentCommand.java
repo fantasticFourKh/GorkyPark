@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ua.park.gorky.core.entity.Comment;
 import ua.park.gorky.core.entity.News;
-import ua.park.gorky.core.entity.constants.Path;
+import ua.park.gorky.core.constants.Path;
 import ua.park.gorky.db.constants.DbTables;
 import ua.park.gorky.db.dao.comment.CommentDAO;
 import ua.park.gorky.db.dao.comment.ICommentDAO;

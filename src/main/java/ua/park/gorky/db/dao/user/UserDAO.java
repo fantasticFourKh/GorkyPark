@@ -3,8 +3,8 @@ package ua.park.gorky.db.dao.user;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ua.park.gorky.core.entity.User;
-import ua.park.gorky.core.entity.exception.DBLayerException;
-import ua.park.gorky.core.entity.exception.DataRepeatException;
+import ua.park.gorky.core.exception.DBLayerException;
+import ua.park.gorky.core.exception.DataRepeatException;
 import ua.park.gorky.db.connection.MySQLConnection;
 import ua.park.gorky.db.constants.DbTables;
 

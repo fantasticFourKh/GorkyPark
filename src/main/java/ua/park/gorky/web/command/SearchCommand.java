@@ -4,7 +4,7 @@ package ua.park.gorky.web.command;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ua.park.gorky.core.entity.News;
-import ua.park.gorky.core.entity.constants.Path;
+import ua.park.gorky.core.constants.Path;
 import ua.park.gorky.db.dao.news.INewsDAO;
 import ua.park.gorky.db.dao.news.NewsDAO;
 

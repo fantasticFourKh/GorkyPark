@@ -4,9 +4,6 @@ import ua.park.gorky.web.command.*;
 import ua.park.gorky.web.command.adminCommand.AllUsersCommand;
 import ua.park.gorky.web.command.adminCommand.BlockUserCommand;
 import ua.park.gorky.web.command.attraction.AddAttractionCommand;
-import ua.park.gorky.web.command.attraction.AttractionAddPageCommand;
-import ua.park.gorky.web.command.attraction.AttractionCatalogCommand;
-import ua.park.gorky.web.command.attraction.AttractionInfoCommand;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -30,8 +27,6 @@ public class CommandContainer {
 		commands.put("registerPage", new RegisterPageCommand());
 		commands.put("sort", new SortCommand());
 		commands.put("search", new SearchCommand());
-		commands.put("attractionCatalog", new AttractionCatalogCommand());
-		commands.put("showAttraction", new AttractionInfoCommand());
 
 		//USER
 		commands.put("profile", new ProfileCommand());
@@ -40,7 +35,6 @@ public class CommandContainer {
 		commands.put("changeUserPassword", new ChangeUserPasswordCommand());
 		commands.put("deleteComment", new DeleteCommentCommand());
 		commands.put("oneNewsComment", new OneNewsCommentCommand());
-		commands.put("attractionAddPage", new AttractionAddPageCommand());
 
 		//ADMIN
 		commands.put("addAttraction", new AddAttractionCommand());
@@ -48,9 +42,6 @@ public class CommandContainer {
 		commands.put("deleteNews", new DeleteNewsCommand());
 		commands.put("addNews", new AddNewsCommand());
 		commands.put("blockUser", new BlockUserCommand());
-		
-		
-		commands.put("imageGenerator", new ImageGeneretorCommand());
 
 	}
 

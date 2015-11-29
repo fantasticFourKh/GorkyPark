@@ -1,7 +1,7 @@
 package ua.park.gorky.web.command;
 
 import ua.park.gorky.core.entity.User;
-import ua.park.gorky.core.entity.constants.Path;
+import ua.park.gorky.core.constants.Path;
 import ua.park.gorky.db.dao.user.UserDAO;
 
 import javax.servlet.ServletException;

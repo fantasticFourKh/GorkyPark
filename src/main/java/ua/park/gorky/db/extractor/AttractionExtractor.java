@@ -2,7 +2,7 @@ package ua.park.gorky.db.extractor;
 
 import org.springframework.stereotype.Service;
 import ua.park.gorky.core.entity.Attraction;
-import ua.park.gorky.core.entity.exception.DataExtractionException;
+import ua.park.gorky.core.exception.DataExtractionException;
 import ua.park.gorky.db.constants.DbTables;
 
 import java.sql.ResultSet;

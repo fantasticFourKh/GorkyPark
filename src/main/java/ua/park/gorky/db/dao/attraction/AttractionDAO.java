@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.park.gorky.core.entity.Attraction;
-import ua.park.gorky.core.entity.exception.DBLayerException;
+import ua.park.gorky.core.exception.DBLayerException;
 import ua.park.gorky.db.connection.MySQLConnection;
 import ua.park.gorky.db.extractor.IEntityExtractor;
 

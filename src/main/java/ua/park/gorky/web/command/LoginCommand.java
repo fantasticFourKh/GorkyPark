@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ua.park.gorky.core.entity.Role;
 import ua.park.gorky.core.entity.User;
-import ua.park.gorky.core.entity.exception.DBLayerException;
+import ua.park.gorky.core.exception.DBLayerException;
 import ua.park.gorky.db.dao.user.IUserDAO;
 import ua.park.gorky.db.dao.user.UserDAO;
 

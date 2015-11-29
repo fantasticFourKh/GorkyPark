@@ -18,7 +18,7 @@ div.header {
 	box-shadow: 0px 15px 20px -5px rgba(0, 0, 0, 0.5);
 }
 
-div.all {
+div.main {
 	width: 1080px;
 	margin: auto;
 }
@@ -249,7 +249,7 @@ div.right div {
 	margin-bottom: 20px;
 }
 
-div.newsContainer {
+div.main-container {
 	margin: auto;
 	margin-top: 80px;
 	max-width: 751px;
@@ -317,7 +317,7 @@ div.bucket label {
 	font-weight: bolder;
 }
 
-div.news {
+div.main-container-content {
 	border: 1px solid #e1e1e1;
 	padding: 10px 30px 30px;
 	background-color: rgba(255, 255, 255, 0.9);

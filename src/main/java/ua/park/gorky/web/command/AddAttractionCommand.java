@@ -3,9 +3,9 @@ package ua.park.gorky.web.command;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ua.park.gorky.core.entity.Attraction;
-import ua.park.gorky.core.entity.constants.Path;
-import ua.park.gorky.core.entity.constants.Utility;
-import ua.park.gorky.core.entity.exception.DBLayerException;
+import ua.park.gorky.core.constants.Path;
+import ua.park.gorky.core.constants.Utility;
+import ua.park.gorky.core.exception.DBLayerException;
 import ua.park.gorky.db.dao.attraction.AttractionDAO;
 import ua.park.gorky.db.dao.attraction.IAttractionDAO;
 

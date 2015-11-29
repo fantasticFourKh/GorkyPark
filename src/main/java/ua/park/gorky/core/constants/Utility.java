@@ -1,4 +1,4 @@
-package ua.park.gorky.core.entity.constants;
+package ua.park.gorky.core.constants;
 
 import javax.servlet.http.Part;
 import java.sql.Time;

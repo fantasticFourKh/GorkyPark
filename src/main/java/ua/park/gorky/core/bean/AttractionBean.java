@@ -1,25 +1,34 @@
 package ua.park.gorky.core.bean;
 
-import ua.park.gorky.core.validation.ValidationConsts;
-import ua.park.gorky.core.validation.ann.NotBlank;
-import ua.park.gorky.core.validation.ann.RegExp;
+
+import ua.park.gorky.core.constants.CoreConsts;
+import ua.park.gorky.core.validator.annotation.MatchPattern;
+import ua.park.gorky.core.validator.annotation.NotNull;
+import ua.park.gorky.core.validator.annotation.StringNotEmpty;
 
 /**
  * @author Vladyslav
  */
 public class AttractionBean implements ViewBean {
-    @NotBlank
+    private static final String ERR_MSG = "Should be positive number";
+
+    @NotNull
+    @StringNotEmpty
     private String title;
-    @NotBlank
+    @NotNull
+    @StringNotEmpty
     private String description;
-    @NotBlank
-    @RegExp(regex = ValidationConsts.NUMBER_REGEX)
+    @NotNull
+    @StringNotEmpty
+    @MatchPattern(pattern = CoreConsts.Pattern.NUMBERS, message = ERR_MSG)
     private String height;
-    @NotBlank
-    @RegExp(regex = ValidationConsts.NUMBER_REGEX)
+    @NotNull
+    @StringNotEmpty
+    @MatchPattern(pattern = CoreConsts.Pattern.NUMBERS, message = ERR_MSG)
     private String adultPrice;
-    @NotBlank
-    @RegExp(regex = ValidationConsts.NUMBER_REGEX)
+    @NotNull
+    @StringNotEmpty
+    @MatchPattern(pattern = CoreConsts.Pattern.NUMBERS, message = ERR_MSG)
     private String childPrice;
 
     public String getTitle() {

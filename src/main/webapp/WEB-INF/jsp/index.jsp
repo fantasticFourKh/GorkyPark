@@ -8,8 +8,8 @@
 <elem:head/>
 <body>
 	<mod:menu/>
-	<div class=all>
-		<div class="newsContainer">
+	<div class=main>
+		<div class="main-container">
 			<div class="settings">
 				<b>Поиск:</b>
 
@@ -80,7 +80,7 @@
 			</div>
 			<c:choose>
 				<c:when test="${not empty queryerror}">
-					<div class="news" id="queryerror">
+					<div class="main-container-content" id="queryerror">
 						${queryerror} <br />
 						<hr />
 						<a href="index.html" class="button">Назад</a>
@@ -88,7 +88,7 @@
 				</c:when>
 				<c:otherwise>
 					<c:forEach items="${news}" var="n">
-						<div class="news">
+						<div class="main-container-content">
 							<div class="comments"
 								onclick="window.location.href='controller?command=oneNewsComment&id_news=${n.id}'">
 								Комментарии

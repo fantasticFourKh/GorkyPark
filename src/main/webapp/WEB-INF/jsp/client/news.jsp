@@ -9,9 +9,9 @@
 
 <body>
 	<mod:menu/>
-	<div class="all">
-		<div class="newsContainer">
-			<div class="news">
+	<div class="main">
+		<div class="main-container">
+			<div class="main-container-content">
 				<div onclick="window.location.href='index.html'" class="next">Назад</div>
 				<p id="title">${news.title }</p>
 				<hr />
@@ -23,7 +23,7 @@
 			</div>
 
 			<c:if test="${not empty user.login}">
-				<div class="news">
+				<div class="main-container-content">
 					<p id="title">Новый комментарий</p>
 					<hr />
 
@@ -48,7 +48,7 @@
 			</c:if>
 
 			<c:if test="${not empty comments}">
-				<div class="news">
+				<div class="main-container-content">
 					<p id="title" name="COMM">${news.commentCount} комментариев</p>
 					<hr />
 					<c:forEach items="${comments}" var="c">

@@ -3,7 +3,7 @@ package ua.park.gorky.web.command.adminCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ua.park.gorky.core.entity.User;
-import ua.park.gorky.core.entity.constants.Path;
+import ua.park.gorky.core.constants.Path;
 import ua.park.gorky.db.dao.user.IUserDAO;
 import ua.park.gorky.db.dao.user.UserDAO;
 import ua.park.gorky.web.command.Command;

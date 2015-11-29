@@ -1,4 +1,4 @@
-package ua.park.gorky.core.entity.exception;
+package ua.park.gorky.core.exception;
 
 /**
  * @user Vladyslav

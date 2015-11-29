@@ -1,7 +1,7 @@
-package ua.park.gorky.core.entity.exception;
+package ua.park.gorky.core.exception;
 
 /**
- * Created by Владислав on 17 ноя 2015 г..
+ * Created by пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ on 17 пїЅпїЅпїЅ 2015 пїЅ..
  */
 public class ValidateException extends RuntimeException {
 

@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import ua.park.gorky.core.entity.Comment;
 import ua.park.gorky.core.entity.News;
 import ua.park.gorky.core.entity.User;
-import ua.park.gorky.core.entity.exception.DBLayerException;
+import ua.park.gorky.core.exception.DBLayerException;
 import ua.park.gorky.db.connection.MySQLConnection;
 import ua.park.gorky.db.constants.DbTables;
 import ua.park.gorky.db.dao.news.INewsDAO;

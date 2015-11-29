@@ -5,6 +5,7 @@
     <!-- Include Required css files-->
     <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/modal.css"/>
     <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css"/>
+    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.css"/>
 
     <!-- Include Required js files -->
     <script src="${pageContext.request.contextPath}/resources/js/quant.js" type="text/javascript"></script>

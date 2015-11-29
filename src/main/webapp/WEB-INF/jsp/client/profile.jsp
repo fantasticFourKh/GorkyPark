@@ -8,9 +8,9 @@
 <elem:head/>
 <body>
 	<mod:menu/>
-	<div class="all">
-		<div class="newsContainer">
-			<div class="news">
+	<div class="main">
+		<div class="main-container">
+			<div class="main-container-content">
 				<p id="title">${user.lastName} ${user.firstName }</p>
 				<hr />
 				<div class="personal">
@@ -58,7 +58,7 @@
 				</div>
 			</div>
 
-			<div class="news">
+			<div class="main-container-content">
 				<p id="title">Изменить пароль</p>
 				<hr />
 				<form action="controller" method="get">

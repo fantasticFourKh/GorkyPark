@@ -2,7 +2,7 @@ package ua.park.gorky.db.transaction;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ua.park.gorky.core.entity.exception.TranscationException;
+import ua.park.gorky.core.exception.TranscationException;
 import ua.park.gorky.db.connection.ConnectionPool;
 import ua.park.gorky.db.connection.MySQLConnection;
 

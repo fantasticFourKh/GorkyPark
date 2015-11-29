@@ -9,9 +9,9 @@
 
 <body>
 	<mod:menu/>
-	<div class="all">
-		<div class="newsContainer">
-			<div class="news">
+	<div class="main">
+		<div class="main-container">
+			<div class="main-container-content">
 				<span id="add"> <c:if test="${userRole.name == 'admin' }">
 						<div onclick="window.location.href='#add_form'"
 							class="addSettingAttraction">
