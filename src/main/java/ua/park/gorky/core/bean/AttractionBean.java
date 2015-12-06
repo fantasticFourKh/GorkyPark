@@ -70,4 +70,16 @@ public class AttractionBean implements ViewBean {
     public void setChildPrice(String childPrice) {
         this.childPrice = childPrice;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("AttractionBean{");
+        sb.append("title='").append(title).append('\'');
+        sb.append(", description='").append(description).append('\'');
+        sb.append(", height='").append(height).append('\'');
+        sb.append(", adultPrice='").append(adultPrice).append('\'');
+        sb.append(", childPrice='").append(childPrice).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
 }

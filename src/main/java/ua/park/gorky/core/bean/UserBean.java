@@ -103,4 +103,19 @@ public class UserBean implements ViewBean {
     public void setRepeatPassword(String repeatPassword) {
         this.repeatPassword = repeatPassword;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("UserBean{");
+        sb.append("login='").append(login).append('\'');
+        sb.append(", password='").append(password).append('\'');
+        sb.append(", repeatPassword='").append(repeatPassword).append('\'');
+        sb.append(", firstName='").append(firstName).append('\'');
+        sb.append(", lastName='").append(lastName).append('\'');
+        sb.append(", email='").append(email).append('\'');
+        sb.append(", phone='").append(phone).append('\'');
+        sb.append(", dob='").append(dob).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
 }

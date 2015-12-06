@@ -10,7 +10,7 @@
 <div class="main">
     <div class="main-container">
         <div class="main-container-content">
-            <c:if test="${validationErrors}">
+            <c:if test="${not empty validationErrors}">
                 <mod:errors validationErrors="${validationErrors}"/>
             </c:if>
             <form action="/attraction/add" method="post" name="attraction"

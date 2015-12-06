@@ -5,13 +5,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ua.park.gorky.core.bean.AttractionBean;
-import ua.park.gorky.core.constants.Path;
-import ua.park.gorky.core.constants.Utility;
 import ua.park.gorky.core.service.api.IAttractionService;
 import ua.park.gorky.core.util.CollectionUtil;
 import ua.park.gorky.core.validator.api.IBeanValidator;
@@ -21,8 +19,6 @@ import ua.park.gorky.web.controller.AbstractController;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.Part;
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -51,7 +47,7 @@ public class BasicAttractionController extends AbstractController {
     }
 
     @RequestMapping(value = WebConsts.Mapping.ID, method = RequestMethod.GET)
-    public ModelAndView get(@RequestParam int id) {
+    public ModelAndView get(@PathVariable int id) {
         ModelAndView modelAndView = createMaV(WebConsts.View.ATTRACTION);
 
         modelAndView.addObject(WebConsts.ClientSideEntities.ATTRACTION, attractionService.getById(id));
@@ -80,8 +76,9 @@ public class BasicAttractionController extends AbstractController {
             LOGGER.debug("Validation not passed. Sending back.");
             return modelAndView;
         }
-        writeFile(request.getPart("inputImage"));
+        writePartToFile(request.getPart("inputImage"));
         attractionService.create(bean);
+        LOGGER.info(bean + " created.");
 
         modelAndView.setViewName(WebConsts.View.ATTRACTIONS);
         return modelAndView;
@@ -101,17 +98,6 @@ public class BasicAttractionController extends AbstractController {
         bean.setAdultPrice(adultPrice);
         bean.setChildPrice(childPrice);
         return bean;
-    }
-
-    private void writeFile(Part imagePart) throws IOException {
-        String savePath = Path.ATTRACTION_IMAGES;
-
-        File folder = new File(savePath);
-        if (!folder.exists()) {
-            folder.mkdir();
-        }
-        String picPath = savePath + File.separator + Utility.createNewPath();
-        imagePart.write(picPath);
     }
 
 }
