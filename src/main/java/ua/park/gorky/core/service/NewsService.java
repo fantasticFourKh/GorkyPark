@@ -5,6 +5,7 @@ import ua.park.gorky.core.bean.NewsBean;
 import ua.park.gorky.core.entity.News;
 import ua.park.gorky.core.service.api.INewsService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,7 +25,7 @@ public class NewsService implements INewsService {
 
     @Override
     public List<News> getAll() {
-        return null;
+        return new ArrayList<>();
     }
 
     @Override
