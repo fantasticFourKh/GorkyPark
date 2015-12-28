@@ -1,7 +1,9 @@
 package ua.park.gorky.db.transaction;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import ua.park.gorky.core.exception.DBLayerException;
 import ua.park.gorky.core.exception.TranscationException;
 import ua.park.gorky.db.connection.IConnectionPool;
 import ua.park.gorky.db.connection.MySQLConnection;
@@ -14,6 +16,8 @@ import java.sql.SQLException;
  */
 @Service
 public class MySqlTransactionManager implements TransactionManager {
+
+    @Qualifier("connectionPool")
     @Autowired
     private IConnectionPool<Connection> connectionPool;
 
@@ -26,7 +30,7 @@ public class MySqlTransactionManager implements TransactionManager {
 
         try {
             connection.commit();
-        } catch (SQLException e) {
+        } catch (SQLException | DBLayerException e) {
             rollback(connection);
             throw new TranscationException("Transaction not commited.", e);
         } finally {

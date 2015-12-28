@@ -1,5 +1,6 @@
 package ua.park.gorky.db.connection;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
@@ -8,6 +9,7 @@ import java.sql.Connection;
  * @author Vladyslav
  */
 @Service
+@Qualifier("connectionPool")
 public class MysqlConnectionPool implements IConnectionPool<Connection> {
     private final ThreadLocal<Connection> pool = new ThreadLocal<>();
 

@@ -2,10 +2,15 @@ package ua.park.gorky.db.dao.user;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Repository;
 import ua.park.gorky.core.entity.User;
 import ua.park.gorky.core.exception.DBLayerException;
 import ua.park.gorky.core.exception.DataRepeatException;
+import ua.park.gorky.db.connection.IConnectionPool;
 import ua.park.gorky.db.connection.MySQLConnection;
+import ua.park.gorky.db.connection.MysqlConnectionPool;
 import ua.park.gorky.db.constants.DbTables;
 
 import java.sql.Connection;
@@ -18,9 +23,13 @@ import java.util.List;
 /**
  * Created by Владислав on 16.11.2015.
  */
+@Repository
 public class UserDAO implements IUserDAO {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(UserDAO.class);
+
+    @Qualifier("connectionPool")
+    @Autowired
+    private IConnectionPool<Connection> connectionPool;
 
     private static final String ADD_USER = "INSERT INTO User (id_role, login, password, "
             + "first_name, last_name, email, phone, reg_date, status_banned, dob, salt)"
@@ -46,23 +55,20 @@ public class UserDAO implements IUserDAO {
 
     @Override
     public User getUserById(int id) {
-        Connection con = MySQLConnection.getWebInstance();
+        Connection con = connectionPool.get();
         try (PreparedStatement pstm = con.prepareStatement(GET_USER_BY_ID)) {
             pstm.setInt(FIRST, id);
             ResultSet rs = pstm.executeQuery();
             rs.relative(FIRST);
             return extractUser(rs);
         } catch (SQLException ex) {
-            rollback(con);
             throw new DBLayerException("Failed to get user with id = " + id, ex);
-        } finally {
-            commit(con);
         }
     }
 
     @Override
     public List<User> getAllUsers() {
-        Connection con = MySQLConnection.getWebInstance();
+        Connection con = connectionPool.get();
         List<User> users = new ArrayList<>();
         try (PreparedStatement pstm = con.prepareStatement(GET_ALL_USERS)) {
             ResultSet rs = pstm.executeQuery();
@@ -71,16 +77,13 @@ public class UserDAO implements IUserDAO {
             }
             return users;
         } catch (SQLException ex) {
-            rollback(con);
             throw new DBLayerException("Failed to get users", ex);
-        } finally {
-            commit(con);
         }
     }
 
     @Override
     public User getUserByLoginPassword(User user) {
-        Connection con = MySQLConnection.getWebInstance();
+        Connection con = connectionPool.get();
         try (PreparedStatement pstm = con.prepareStatement(GET_USER_BY_LOGIN_PASSWORD)) {
             int k = FIRST;
             pstm.setString(k++, user.getLogin());
@@ -89,32 +92,26 @@ public class UserDAO implements IUserDAO {
             rs.relative(FIRST);
             return extractUser(rs);
         } catch (SQLException e) {
-            rollback(con);
             throw new DBLayerException("Matches login and password not found", e);
-        } finally {
-            commit(con);
         }
     }
 
     @Override
     public User getUserByLogin(String login) {
-        Connection con = MySQLConnection.getWebInstance();
+        Connection con = connectionPool.get();
         try (PreparedStatement pstm = con.prepareStatement(GET_USER_BY_LOGIN)) {
             pstm.setString(FIRST, login);
             ResultSet rs = pstm.executeQuery();
             rs.relative(FIRST);
             return extractUser(rs);
         } catch (SQLException ex) {
-            rollback(con);
             throw new DBLayerException("Failed to get user with login = " + login, ex);
-        } finally {
-            commit(con);
         }
     }
 
     @Override
     public void addUser(User user) {
-        Connection con = MySQLConnection.getWebInstance();
+        Connection con = connectionPool.get();
         try (PreparedStatement pstm = con.prepareStatement(ADD_USER)) {
             int k = FIRST;
             pstm.setInt(k++, user.getIdRole());
@@ -127,67 +124,54 @@ public class UserDAO implements IUserDAO {
             pstm.setTimestamp(k++, user.getRegDate());
             pstm.setBoolean(k++, user.isStatusBanned());
             pstm.setDate(k++, user.getDob());
-            pstm.setString(k, user.getSalt());
+            pstm.setString(k, "seledka");
             pstm.executeUpdate();
         } catch (SQLException ex) {
-            rollback(con);
             throw new DBLayerException("Failed to add user" + user, ex);
-        } finally {
-            commit(con);
         }
     }
 
     @Override
     public void deleteUser(User user) {
-        Connection con = MySQLConnection.getWebInstance();
+        Connection con = connectionPool.get();
         try (PreparedStatement pstm = con.prepareStatement(DELETE_USER)) {
             pstm.setInt(1, user.getId());
             pstm.executeUpdate();
         } catch (SQLException ex) {
-            rollback(con);
             throw new DBLayerException("Failed to delete user" + user, ex);
-        } finally {
-            commit(con);
         }
     }
 
     @Override
     public void updateUserPassword(User user) {
-        Connection con = MySQLConnection.getWebInstance();
+        Connection con = connectionPool.get();
         try (PreparedStatement pstm = con.prepareStatement(UPDATE_USER_PASSWORD)) {
             int k = FIRST;
             pstm.setString(k++, user.getPassword());
-            pstm.setInt(k++, user.getId());
+            pstm.setInt(k, user.getId());
             pstm.executeUpdate();
         } catch (SQLException ex) {
-            rollback(con);
             throw new DBLayerException("Failed to update user password" + user, ex);
-        } finally {
-            commit(con);
         }
     }
 
     @Override
     public void updateUserStatus(User user) {
-        Connection con = MySQLConnection.getWebInstance();
+        Connection con = connectionPool.get();
         try (PreparedStatement pstm = con.prepareStatement(UPDATE_USER_STATUS)) {
             int k = FIRST;
             pstm.setBoolean(k++, user.isStatusBanned());
             pstm.setInt(k++, user.getId());
             pstm.executeUpdate();
         } catch (SQLException ex) {
-            rollback(con);
             throw new DBLayerException("Failed to update user status" + user, ex);
-        } finally {
-            commit(con);
         }
     }
 
     @Override
     public void checkForMatches(User user) {
         List<User> users = new ArrayList<>();
-
-        Connection con = MySQLConnection.getWebInstance();
+        Connection con = connectionPool.get();
         try (PreparedStatement pstm = con.prepareStatement(GET_USER_BY_LOGIN_EMAIL_PHONE)) {
             int k = 1;
             pstm.setString(k++, user.getLogin());
@@ -211,31 +195,7 @@ public class UserDAO implements IUserDAO {
                 }
             }
         } catch (SQLException e) {
-            rollback(con);
             throw new DBLayerException("Matches login and password not found", e);
-        } finally {
-            commit(con);
-        }
-    }
-
-    private void rollback(Connection con) {
-        if (con != null) {
-            try {
-                con.rollback();
-            } catch (SQLException ex) {
-                LOGGER.error("RollBack: " + ex.getMessage());
-            }
-        }
-    }
-
-    private void commit(Connection con) {
-        if (con != null) {
-            try {
-                con.commit();
-                con.close();
-            } catch (SQLException ex) {
-                LOGGER.error("Commit: " + ex.getMessage());
-            }
         }
     }
 

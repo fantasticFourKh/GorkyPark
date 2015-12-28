@@ -1,11 +1,12 @@
 package ua.park.gorky.core.entity;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import ua.park.gorky.core.bean.NewsBean;
 
 import java.sql.Timestamp;
 
 /**
- * Created by ��������� on 17 ��� 2015 �..
+ * Created by Vladyslav_Yemelianov
  */
 public class News extends Entity {
 
@@ -16,6 +17,18 @@ public class News extends Entity {
     private Timestamp postDate;
 
     private int commentCount;
+
+    public News() {
+    }
+
+    public News(NewsBean bean) {
+        this.title = bean.getTitle();
+        this.body = bean.getDescription();
+        this.user = bean.getUser();
+        this.newsPicture = bean.getFilePath();
+        this.postDate = new Timestamp(System.currentTimeMillis());
+        this.commentCount = 0;
+    }
 
     public User getUser() {
         return user;

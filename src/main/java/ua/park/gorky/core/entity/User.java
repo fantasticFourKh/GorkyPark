@@ -1,6 +1,9 @@
 package ua.park.gorky.core.entity;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import ua.park.gorky.core.bean.AdminUserBean;
+import ua.park.gorky.core.bean.UserBean;
+import ua.park.gorky.core.util.DateUtil;
 
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -21,6 +24,35 @@ public class User extends Entity {
     private boolean statusBanned;
     private Date dob;
     private String salt;
+
+    public User() {
+    }
+
+    public User(AdminUserBean bean) {
+        this.login = bean.getLogin();
+        this.password = bean.getPassword();
+        this.firstName = bean.getFirstName();
+        this.lastName = bean.getLastName();
+        this.email = bean.getEmail();
+        this.phone = bean.getPhone();
+        this.statusBanned = false;
+        this.regDate = new Timestamp(System.currentTimeMillis());
+        this.dob = new Date(DateUtil.parseDate(bean.getDob()).getTime());
+        this.idRole = Role.valueOf(bean.getRole()).getId();
+    }
+
+    public User(UserBean bean) {
+        this.login = bean.getLogin();
+        this.password = bean.getPassword();
+        this.firstName = bean.getFirstName();
+        this.lastName = bean.getLastName();
+        this.email = bean.getEmail();
+        this.phone = bean.getPhone();
+        this.statusBanned = false;
+        this.regDate = new Timestamp(System.currentTimeMillis());
+        this.dob = new Date(DateUtil.parseDate(bean.getDob()).getTime());
+        this.idRole = Role.USER.getId();
+    }
 
     public int getIdRole() {
         return idRole;

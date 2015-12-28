@@ -2,9 +2,13 @@ package ua.park.gorky.db.dao.news;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Repository;
 import ua.park.gorky.core.entity.News;
 import ua.park.gorky.core.entity.User;
 import ua.park.gorky.core.exception.DBLayerException;
+import ua.park.gorky.db.connection.IConnectionPool;
 import ua.park.gorky.db.connection.MySQLConnection;
 import ua.park.gorky.db.constants.DbTables;
 import ua.park.gorky.db.dao.user.IUserDAO;
@@ -20,9 +24,14 @@ import java.util.List;
 /**
  * Created by Владислав on 18.11.2015.
  */
+@Repository
 public class NewsDAO implements INewsDAO {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(NewsDAO.class);
+
+    @Qualifier("connectionPool")
+    @Autowired
+    private IConnectionPool<Connection> connectionPool;
 
     private static final String ADD_NEWS = "INSERT INTO News (id_user, title, body, news_picture," +
             " post_date) VALUES (?,?,?,?,?)";
@@ -39,11 +48,12 @@ public class NewsDAO implements INewsDAO {
 
     private static final int FIRST = 1;
 
-    private IUserDAO userDAO = new UserDAO();
+    @Autowired
+    private IUserDAO userDAO;
 
     @Override
     public void addNews(News news) {
-        Connection con = MySQLConnection.getWebInstance();
+        Connection con = connectionPool.get();
         try (PreparedStatement pstm = con.prepareStatement(ADD_NEWS)) {
             int k = FIRST;
             pstm.setInt(k++, news.getUser().getId());
@@ -53,16 +63,13 @@ public class NewsDAO implements INewsDAO {
             pstm.setTimestamp(k, news.getPostDate());
             pstm.executeUpdate();
         } catch (SQLException ex) {
-            rollback(con);
             throw new DBLayerException("Failed to add news" + news, ex);
-        } finally {
-            commit(con);
         }
     }
 
     @Override
     public void deleteNewsById(int id) {
-        Connection con = MySQLConnection.getWebInstance();
+        Connection con = connectionPool.get();
         try {
             PreparedStatement pstm = con.prepareStatement(DELETE_COMMENT_BY_NEWS);
             pstm.setInt(FIRST, id);
@@ -73,32 +80,26 @@ public class NewsDAO implements INewsDAO {
             pstm.executeUpdate();
             pstm.close();
         } catch (SQLException ex) {
-            rollback(con);
             throw new DBLayerException("Failed to delete news with id=" + id, ex);
-        } finally {
-            commit(con);
         }
     }
 
     @Override
     public News getNewsById(int id) {
-        Connection con = MySQLConnection.getWebInstance();
+        Connection con = connectionPool.get();
         try (PreparedStatement pstm = con.prepareStatement(GET_NEWS_BY_ID)) {
             pstm.setInt(FIRST, id);
             ResultSet rs = pstm.executeQuery();
             rs.relative(FIRST);
             return extractNews(rs);
         } catch (SQLException ex) {
-            rollback(con);
             throw new DBLayerException("Failed to get news with id = " + id, ex);
-        } finally {
-            commit(con);
         }
     }
 
     @Override
     public List<News> getAllNews() {
-        Connection con = MySQLConnection.getWebInstance();
+        Connection con = connectionPool.get();
         List<News> news = new ArrayList<>();
         try (PreparedStatement pstm = con.prepareStatement(GET_ALL_NEWS)) {
             ResultSet rs = pstm.executeQuery();
@@ -107,16 +108,13 @@ public class NewsDAO implements INewsDAO {
             }
             return news;
         } catch (SQLException ex) {
-            rollback(con);
             throw new DBLayerException("Failed to get news", ex);
-        } finally {
-            commit(con);
         }
     }
 
     @Override
     public List<News> getNewsByTitleBody(String text) {
-        Connection con = MySQLConnection.getWebInstance();
+        Connection con = connectionPool.get();
         List<News> newses = new ArrayList<>();
         try (PreparedStatement pstm = con.prepareStatement(GET_NEWS_BY_TITLE_BODY)) {
             int k = FIRST;
@@ -128,31 +126,7 @@ public class NewsDAO implements INewsDAO {
             }
             return newses;
         } catch (SQLException ex) {
-            rollback(con);
             throw new DBLayerException("Failed to get news with query=" + text, ex);
-        } finally {
-            commit(con);
-        }
-    }
-
-    private void rollback(Connection con) {
-        if (con != null) {
-            try {
-                con.rollback();
-            } catch (SQLException ex) {
-                LOGGER.error("RollBack: " + ex.getMessage());
-            }
-        }
-    }
-
-    private void commit(Connection con) {
-        if (con != null) {
-            try {
-                con.commit();
-                con.close();
-            } catch (SQLException ex) {
-                LOGGER.error("Commit: " + ex.getMessage());
-            }
         }
     }
 

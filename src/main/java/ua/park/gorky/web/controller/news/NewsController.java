@@ -22,8 +22,13 @@ import ua.park.gorky.core.util.CollectionUtil;
 import ua.park.gorky.core.validator.api.IBeanValidator;
 import ua.park.gorky.web.constants.WebConsts;
 import ua.park.gorky.web.controller.AbstractController;
+import ua.park.gorky.web.converter.RequestConverter;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -75,7 +80,8 @@ public class NewsController extends AbstractController {
     }
 
     @RequestMapping(value = WebConsts.Mapping.ADD, method = RequestMethod.POST)
-    public ModelAndView addArticle(HttpSession session, ModelMap modelMap) {
+    public ModelAndView addArticle(HttpSession session, HttpServletRequest request) throws IOException, ServletException {
+        ModelMap modelMap = RequestConverter.convertToModelMap(request);
         NewsBean newsBean = buildBean(modelMap);
         Map<String, List<String>> errorsMap = beanValidator.validateBean(newsBean);
         ModelAndView modelAndView = createMaV();
@@ -83,6 +89,13 @@ public class NewsController extends AbstractController {
             modelAndView.setViewName(WebConsts.View.NEWS_NEW);
             return getModelWithErrors(errorsMap, modelAndView, WebConsts.ClientSideEntities.NEWS_INVALID_BEAN, session, newsBean);
         }
+        Part inputNewsImg = request.getPart("inputNewsImg");
+        String filePath = writePartToFile(inputNewsImg);
+        User user =  (User) session.getAttribute(WebConsts.LOGGED_USER);
+
+        newsBean.setFilePath(filePath);
+        newsBean.setUser(user);
+
         clearSessionFromObj(session, WebConsts.ClientSideEntities.NEWS_INVALID_BEAN);
         newsService.create(newsBean);
         LOGGER.debug(newsBean + " created.");

@@ -2,6 +2,7 @@ package ua.park.gorky.db.dao.comment;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 import ua.park.gorky.core.entity.Comment;
 import ua.park.gorky.core.entity.News;
 import ua.park.gorky.core.entity.User;
@@ -23,6 +24,7 @@ import java.util.List;
 /**
  * Created by Владислав on 18.11.2015.
  */
+@Repository
 public class CommentDAO implements ICommentDAO {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CommentDAO.class);

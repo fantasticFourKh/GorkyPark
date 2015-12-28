@@ -31,12 +31,5 @@ public enum Role {
         return id;
     }
 
-    public static void main(String[] args) {
-        User user = new User();
-        user.setIdRole(1);
-        System.out.println(Role.getRole(user));
-        System.out.println(Role.ADMIN.getId());
-    }
-
 }
 

@@ -3,6 +3,7 @@ package ua.park.gorky.db.dao.attraction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import ua.park.gorky.core.entity.Attraction;
 import ua.park.gorky.core.exception.DBLayerException;
@@ -19,7 +20,7 @@ import java.util.List;
 /**
  * @author Vladyslav
  */
-@Service
+@Repository
 public class AttractionDAO implements IAttractionDAO {
     private static final Logger LOGGER = LoggerFactory.getLogger(AttractionDAO.class);
 

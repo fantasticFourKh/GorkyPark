@@ -49,7 +49,7 @@ public abstract class AbstractController {
         session.removeAttribute(beanName);
     }
 
-    protected void writePartToFile(Part imagePart) throws IOException {
+    protected String writePartToFile(Part imagePart) throws IOException {
         String savePath = Path.ATTRACTION_IMAGES;
 
         File folder = new File(savePath);
@@ -58,6 +58,7 @@ public abstract class AbstractController {
         }
         String picPath = savePath + File.separator + Utility.createNewPath();
         imagePart.write(picPath);
+        return picPath;
     }
 
     protected User getCurrentUser(HttpSession session) {

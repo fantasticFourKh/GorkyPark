@@ -1,5 +1,6 @@
 package ua.park.gorky.db.dao.user;
 
+import org.springframework.stereotype.Repository;
 import ua.park.gorky.core.entity.User;
 
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.List;
 /**
  * Created by Владислав on 16.11.2015.
  */
+@Repository
 public interface IUserDAO {
 
     User getUserById(int id);

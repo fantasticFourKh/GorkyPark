@@ -21,7 +21,7 @@
                         <label for="inputTitle" class="col-lg-4 control-label">Title</label>
 
                         <div class="col-lg-8">
-                            <input type="text" class="form-control" id="inputTitle" placeholder="Title"
+                            <input type="text" class="form-control" id="inputTitle" placeholder="Title" name="inputTitle"
                                    value="${invalidNewsBean.title}">
                         </div>
                     </div>
@@ -30,7 +30,7 @@
                         <label for="inputDesc" class="col-lg-4 control-label">Description</label>
 
                         <div class="col-lg-8">
-                            <input type="text" class="form-control" id="inputDesc" placeholder="Description"
+                            <input type="text" class="form-control" id="inputDesc" placeholder="Description" name="inputDesc"
                                    value="${invalidNewsBean.description}">
                         </div>
                     </div>
@@ -39,7 +39,7 @@
                         <label for="inputImg" class="col-lg-4 control-label">Article image</label>
 
                         <div class="col-lg-8">
-                            <input type="file" class="form-control" id="inputImg">
+                            <input type="file" class="form-control" id="inputImg" name="inputNewsImg">
                         </div>
                     </div>
 

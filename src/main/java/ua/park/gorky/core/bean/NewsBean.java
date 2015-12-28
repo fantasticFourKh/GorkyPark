@@ -1,5 +1,6 @@
 package ua.park.gorky.core.bean;
 
+import ua.park.gorky.core.entity.User;
 import ua.park.gorky.core.validator.annotation.NotNull;
 import ua.park.gorky.core.validator.annotation.StringNotEmpty;
 
@@ -16,6 +17,10 @@ public class NewsBean implements ViewBean {
     @StringNotEmpty
     private String description;
 
+    private String filePath;
+
+    private User user;
+
     public String getTitle() {
         return title;
     }
@@ -30,6 +35,22 @@ public class NewsBean implements ViewBean {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
