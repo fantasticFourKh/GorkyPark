@@ -7,7 +7,7 @@
         <div id="login">
             <span id="login">Вы вошли как:&nbsp;&nbsp;</span>${loggedUser.login}
             <hr/>
-            <a href="controller?command=profile"><img width="30"
+            <a href="/user/profile"><img width="30"
                                                       align="absmiddle" height="30" src="resources/image/account2.png"/></a>&nbsp;
             <a href="/logout"><img width="30"
                                    align="absmiddle" height="30" src="resources/image/exit.png"/></a>
@@ -27,13 +27,10 @@
                     <img src="resources/image/error.png" align="absmiddle"/>&nbsp;&nbsp;${rightErrorMessage}
                 </div>
             </c:if>
-            <form action="/login" method="post"><input
-                    class="field" name="inputLogin" maxlength="16" type="text"
-                    placeholder="Login..."/> <br/> <input class="field"
-                                                          name="inputPassword" maxlength="16" type="password"
-                                                          placeholder="Password..."/> <br/> <input class="btn"
-                                                                                                   type="submit"
-                                                                                                   value="Sign in"/>
+            <form action="/login" method="post">
+                <input class="field" name="inputLogin" maxlength="16" type="text" placeholder="Login..."/> <br/>
+                <input class="field" name="inputPassword" maxlength="16" type="password" placeholder="Password..."/> <br/>
+                <input class="btn" type="submit" value="Sign in"/>
             </form>
             <br/>
             <a href="/user/page" class="btn btn-success">Registration</a>

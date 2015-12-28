@@ -30,7 +30,7 @@ public class SessionController extends AbstractController {
     @RequestMapping(value = WebConsts.Mapping.LOGOUT, method = RequestMethod.GET)
     public String logout(HttpSession session) {
         session.invalidate();
-        return WebConsts.View.INDEX;
+        return WebConsts.REDIRECT + WebConsts.Mapping.HOME;
     }
 
     @RequestMapping(value = WebConsts.Mapping.LOGIN, method = RequestMethod.POST)
