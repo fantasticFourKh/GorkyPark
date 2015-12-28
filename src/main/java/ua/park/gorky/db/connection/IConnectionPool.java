@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
  * @author Vladyslav
  */
 @Service
-public interface ConnectionPool<T> {
+public interface IConnectionPool<T> {
     void put(T connection);
 
     T get();

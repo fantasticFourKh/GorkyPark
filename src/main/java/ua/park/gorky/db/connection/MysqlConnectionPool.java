@@ -8,7 +8,7 @@ import java.sql.Connection;
  * @author Vladyslav
  */
 @Service
-public class MysqlConnectionPool implements ConnectionPool<Connection> {
+public class MysqlConnectionPool implements IConnectionPool<Connection> {
     private final ThreadLocal<Connection> pool = new ThreadLocal<>();
 
     @Override

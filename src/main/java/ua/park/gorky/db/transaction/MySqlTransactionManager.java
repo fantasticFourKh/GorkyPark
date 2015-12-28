@@ -3,7 +3,7 @@ package ua.park.gorky.db.transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.park.gorky.core.exception.TranscationException;
-import ua.park.gorky.db.connection.ConnectionPool;
+import ua.park.gorky.db.connection.IConnectionPool;
 import ua.park.gorky.db.connection.MySQLConnection;
 
 import java.sql.Connection;
@@ -15,7 +15,7 @@ import java.sql.SQLException;
 @Service
 public class MySqlTransactionManager implements TransactionManager {
     @Autowired
-    private ConnectionPool<Connection> connectionPool;
+    private IConnectionPool<Connection> connectionPool;
 
     @Override
     public <T> T doInTransaction(TransactionOperation<T> transactionOperation) {

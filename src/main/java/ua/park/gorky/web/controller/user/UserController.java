@@ -17,7 +17,9 @@ import ua.park.gorky.core.validator.additional.UserBeanValidator;
 import ua.park.gorky.core.validator.api.IBeanValidator;
 import ua.park.gorky.web.constants.WebConsts;
 import ua.park.gorky.web.controller.AbstractController;
+import ua.park.gorky.web.converter.RequestConverter;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
@@ -58,7 +60,8 @@ public class UserController extends AbstractController implements UserBeanValida
     }
 
     @RequestMapping(value = WebConsts.Mapping.ADD, method = RequestMethod.POST)
-    public ModelAndView createNew(HttpSession session, ModelMap modelMap) {
+    public ModelAndView createNew(HttpSession session, HttpServletRequest request) {
+        ModelMap modelMap = RequestConverter.convertToModelMap(request);
         UserBean bean = buildBean(modelMap);
         Map<String, List<String>> errors = beanValidator.validateBean(bean);
 
@@ -78,6 +81,7 @@ public class UserController extends AbstractController implements UserBeanValida
         userService.create(bean);
         LOGGER.debug(bean.getLogin() + " registered.");
 
+        modelAndView.setViewName(WebConsts.View.INDEX);
         return modelAndView;
     }
 
